@@ -1,10 +1,10 @@
 /**
- * Three.js Interactive Digital Wave Grid, Aerodynamic Streamlines & Hero Physics
+ * Three.js Interactive Digital Loss Manifold, Neural Streamlines & Latent Space Physics
  * Built with techniques from Soumik Ghosh's Agent Skills:
  * - 3d-hero-interactions (pointer tracking, damped lerp, click impulses, drag-to-rotate, particle burst)
  * - scroll-driven-3d-story (scroll progress camera choreography)
  * - ai-website-aesthetics (dark-first tokens, fog, glowing nodes)
- * - Option 1: Ambient 3D Flow Streamlines & Wind-Tunnel Tracers
+ * - Latent Space & Neural Violet Theme
  */
 
 (function () {
@@ -53,7 +53,7 @@
   const burstColors = new Float32Array(CONFIG.particleBurstCount * 3);
   let nextBurstIndex = 0;
 
-  // 4. Ambient 3D Flow Streamlines (CFD Wind Tunnel Flow)
+  // 4. Ambient 3D Neural Streamlines (Latent Trajectories)
   const streamlines = [];
   let tracerPointsMesh, tracerGeometry;
   const tracerPositions = new Float32Array(CONFIG.streamlineCount * 3);
@@ -63,29 +63,29 @@
   let scrollProgress = 0;
   let targetScrollProgress = 0;
 
-  // Theme palettes (ai-website-aesthetics tokens)
+  // Theme palettes (ai-website-aesthetics tokens: Latent Space & Neural Violet)
   const THEMES = {
     dark: {
-      gridColor: 0x6366f1,       // Accent indigo
+      gridColor: 0x8b5cf6,       // Neural Violet
       gridOpacity: 0.35,
-      pointsColor: 0x00d4ff,     // Accent-2 cyan
+      pointsColor: 0x38bdf8,     // Cold Inference Cyan
       pointsOpacity: 0.85,
-      streamlineColor: 0x38bdf8, // Luminous sky-cyan
+      streamlineColor: 0xa78bfa, // Luminous violet latent trajectory
       streamlineOpacity: 0.38,
-      tracerColor: 0x00d4ff,
-      burstColor: 0x38bdf8,
-      fogColor: 0x0a0a0e,        // --bg-0
+      tracerColor: 0x38bdf8,
+      burstColor: 0xc084fc,
+      fogColor: 0x08080d,        // --bg-0
       fogDensity: 0.00115
     },
     light: {
-      gridColor: 0x4f46e5,
+      gridColor: 0x7c3aed,
       gridOpacity: 0.22,
       pointsColor: 0x0284c7,
       pointsOpacity: 0.70,
-      streamlineColor: 0x0284c7,
+      streamlineColor: 0x6366f1,
       streamlineOpacity: 0.28,
-      tracerColor: 0x0369a1,
-      burstColor: 0x0284c7,
+      tracerColor: 0x0284c7,
+      burstColor: 0x7c3aed,
       fogColor: 0xf8fafc,
       fogDensity: 0.0011
     }
@@ -122,7 +122,7 @@
     // 5. Construct Particle Burst System
     createParticleBurstPool();
 
-    // 6. Construct 3D Aerodynamic Flow Streamlines (Option 1)
+    // 6. Construct 3D Neural Flow Streamlines (Latent Trajectories)
     createStreamlines();
 
     // 7. Event Listeners
@@ -181,8 +181,8 @@
     const ctx = c.getContext('2d');
     const grad = ctx.createRadialGradient(16, 16, 0, 16, 16, 16);
     grad.addColorStop(0, 'rgba(255, 255, 255, 1)');
-    grad.addColorStop(0.3, 'rgba(0, 212, 255, 0.9)');
-    grad.addColorStop(0.7, 'rgba(99, 102, 241, 0.3)');
+    grad.addColorStop(0.3, 'rgba(56, 189, 248, 0.9)');  // Cyan (#38bdf8)
+    grad.addColorStop(0.7, 'rgba(139, 92, 246, 0.35)'); // Neural Violet (#8b5cf6)
     grad.addColorStop(1, 'rgba(0, 0, 0, 0)');
     ctx.fillStyle = grad;
     ctx.fillRect(0, 0, 32, 32);
@@ -221,7 +221,7 @@
     scene.add(burstPointsMesh);
   }
 
-  // 3D Aerodynamic Flow Streamlines (Wind Tunnel Flow Field)
+  // 3D Neural Flow Streamlines (Latent Space Trajectories)
   function createStreamlines() {
     const theme = getCurrentTheme();
     const count = CONFIG.streamlineCount;
@@ -290,7 +290,7 @@
       });
     }
 
-    // Tracer Beads traveling along streamlines (smoke wire visualization)
+    // Tracer Beads traveling along streamlines (neural signal pulse visualization)
     tracerGeometry = new THREE.BufferGeometry();
     for (let s = 0; s < count; s++) {
       tracerPositions[s * 3 + 1] = -9999;
@@ -497,7 +497,7 @@
     }
     geometry.attributes.position.needsUpdate = true;
 
-    // F. Update 3D Aerodynamic Flow Streamlines & Wind-Tunnel Tracers (Option 1)
+    // F. Update 3D Neural Flow Streamlines & Latent Tracer Beads
     const segs = CONFIG.streamlineSegments;
     const tracerPosArr = tracerGeometry ? tracerGeometry.attributes.position.array : null;
 
@@ -515,7 +515,7 @@
         const x = -850 + u * 1700;
         const i3 = i * 3;
 
-        // Harmonic Navier-Stokes streamline flow equation
+        // Harmonic neural latent manifold wave equations
         const flowWarpY = Math.sin(x * 0.005 + st * 1.5 + sl.phase) * 20 + Math.cos(x * 0.002 + st) * 10;
         const flowWarpZ = Math.cos(x * 0.004 + st * 1.2 + sl.phase) * 18;
 

@@ -130,7 +130,7 @@
           <div>
             <div class="flex items-center justify-between mb-4">
               ${proj.badge ? `
-                <span class="px-3 py-1 rounded-full text-xs font-semibold bg-indigo-500/15 text-indigo-400 border border-indigo-500/30 font-mono">
+                <span class="px-3 py-1 rounded-full text-xs font-semibold bg-violet-500/15 text-violet-400 border border-violet-500/30 font-mono">
                   ${proj.badge}
                 </span>
               ` : '<span></span>'}
@@ -156,11 +156,11 @@
     const expContainer = document.getElementById('experience-container');
     if (expContainer && config.experience) {
       expContainer.innerHTML = config.experience.map(item => `
-        <div class="relative pl-8 pb-8 border-l-2 border-indigo-500/30 last:pb-0">
-          <div class="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-indigo-500 border-4 border-slate-900 light:border-white"></div>
+        <div class="relative pl-8 pb-8 border-l-2 border-violet-500/30 last:pb-0">
+          <div class="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-violet-500 border-4 border-slate-900 light:border-white"></div>
           <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-1">
             <h4 class="text-lg font-bold text-slate-100 light:text-slate-900">${item.role}</h4>
-            <span class="text-xs font-mono text-indigo-400">${item.period}</span>
+            <span class="text-xs font-mono text-violet-400">${item.period}</span>
           </div>
           <div class="text-sm font-medium text-slate-400 mb-2">${item.company}</div>
           <p class="text-slate-400 light:text-slate-600 text-sm leading-relaxed">${item.description}</p>
@@ -172,20 +172,20 @@
     const featuredPostsContainer = document.getElementById('featured-posts-container');
     if (featuredPostsContainer && config.posts) {
       featuredPostsContainer.innerHTML = config.posts.slice(0, 3).map(post => `
-        <a href="post.html?slug=${post.slug}" class="glass-panel card-hover-effect rounded-2xl p-6 block border border-slate-800 light:border-slate-200">
+        <a href="post.html?slug=${post.slug}" class="glass-panel card-hover-effect rounded-2xl p-6 block border border-slate-800 light:border-slate-200 group">
           <div class="flex items-center gap-3 text-xs text-slate-400 mb-3">
             <span>${post.date}</span>
             <span>•</span>
             <span>${post.readingTime}</span>
           </div>
-          <h4 class="text-lg font-bold mb-2 text-slate-100 light:text-slate-900 group-hover:text-indigo-400 transition-colors">
+          <h4 class="text-lg font-bold mb-2 text-slate-100 light:text-slate-900 group-hover:text-violet-400 transition-colors">
             ${post.title}
           </h4>
           <p class="text-slate-400 light:text-slate-600 text-sm mb-4 line-clamp-2">
             ${post.excerpt}
           </p>
           <div class="flex flex-wrap gap-2">
-            ${post.tags.map(tag => `<span class="text-xs px-2 py-0.5 rounded bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 font-mono">${tag}</span>`).join('')}
+            ${post.tags.map(tag => `<span class="text-xs px-2 py-0.5 rounded bg-violet-500/10 text-violet-400 border border-violet-500/20 font-mono">${tag}</span>`).join('')}
           </div>
         </a>
       `).join('');

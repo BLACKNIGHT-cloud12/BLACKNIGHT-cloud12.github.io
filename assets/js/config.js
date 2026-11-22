@@ -1,20 +1,20 @@
 /**
  * Portfolio & Blog Configuration
  * Soumik Ghosh (BLACKNIGHT-cloud12)
- * Jadavpur University · Scientific Machine Learning (SciML) · CFD
+ * Jadavpur University · Machine Learning & Deep Learning Systems
  */
 window.SITE_CONFIG = {
   profile: {
     name: "Soumik Ghosh",
-    title: "Scientific Machine Learning (SciML) & Computational Engineering",
+    title: "Machine Learning Engineer & Deep Learning Researcher",
     affiliation: "Jadavpur University, Kolkata",
-    statusBadge: "Where Navier-Stokes Meets Deep Learning",
+    statusBadge: "Training Neural Architectures & Scalable ML Systems",
     location: "Kolkata, India",
     avatar: "https://avatars.githubusercontent.com/u/238549548?v=4",
-    shortBio: "Undergraduate researcher at Jadavpur University building machine learning architectures that respect physical conservation laws. Specializing in physics-informed neural operators (PINO, FNO), aerodynamic topology optimization (TO-PINN), and sub-millisecond SciML surrogates (NeuroFoil).",
+    shortBio: "Undergraduate researcher at Jadavpur University engineering deep neural network architectures, representation learning systems, continuous neural operators, and high-performance inference pipelines.",
     about: `
-      I am a Scientific Machine Learning (SciML) and Computational Engineering practitioner at Jadavpur University working at the intersection of fluid dynamics, physics-informed deep learning, and quantitative modeling.
-      My work focuses on building architectures that do not treat physical systems as black-box interpolators, but instead respect the underlying conservation laws (Navier-Stokes mass, momentum, and energy conservation, frame indifference, and thermodynamics).
+      I am a Machine Learning Engineer and Deep Learning Researcher at Jadavpur University specializing in neural network architectures, representation learning, continuous operators, and scalable deep learning systems.
+      My work focuses on developing expressive model architectures, optimizing loss manifolds, and designing high-throughput inference engines that bridge theoretical mathematical foundations with production-grade computational performance.
     `,
     emails: {
       personal: "soumikghosh30.03.07@gmail.com",
@@ -29,71 +29,70 @@ window.SITE_CONFIG = {
     resumeUrl: "https://www.linkedin.com/in/soumik-ghosh-434164377"
   },
 
-  // Focused exclusively on Flagship SciML Projects
   projects: [
     {
       id: "project-neurofoil",
-      title: "NeuroFoil: Industrial SciML Aerodynamic Platform",
-      description: "End-to-end automated OpenFOAM-to-SciML surrogate and design platform trained on a 504-point CFD grid across 21 NACA airfoils. Predicts aerodynamic lift (CL), drag (CD), moment (Cm), and continuous 161-point surface pressure fields Cp(x) with sub-millisecond latency (unseen airfoil R² = 0.966). Features coupled aero-structural wingbox mechanics (spar web sizing, fuel volume, inertia Ixx), Mahalanobis epistemic uncertainty quantification with 95% conformal prediction bands, and an MDAO SLSQP optimizer for CFD-validated constrained inverse design.",
-      tags: ["Python", "C++", "OpenFOAM v2606", "PyTorch", "MDAO SLSQP", "Uncertainty Quantification", "SciPy"],
+      title: "NeuroFoil: Neural Operator & Accelerated Inference Platform",
+      description: "High-throughput deep learning inference platform featuring continuous neural surrogates capable of sub-millisecond multi-field prediction (unseen test R² = 0.966). Integrates Mahalanobis epistemic uncertainty quantification with 95% conformal prediction intervals and constrained SLSQP latent optimization.",
+      tags: ["PyTorch", "Deep Learning", "Neural Surrogates", "Uncertainty Quantification", "C++", "SLSQP Optimization"],
       github: "https://github.com/BLACKNIGHT-cloud12/NeuroFoil-Core",
       demo: "https://github.com/BLACKNIGHT-cloud12/NeuroFoil-Core",
       featured: true,
-      badge: "Flagship SciML Platform"
+      badge: "High-Throughput ML Platform"
     },
     {
       id: "project-to-pinn",
-      title: "TO-PINN: Unsupervised Aerodynamic Topology Optimization",
-      description: "An autonomous aerodynamic architect governed strictly by Navier-Stokes PDE residuals without relying on costly pre-computed CFD datasets or discrete adjoint solvers. Uses continuous Brinkman Penalization and a novel Two-Phase Training Architecture (warmup phase locking fluid physics, followed by an unconstrained sculpting phase under a 20% volume constraint) to carve out optimal aerodynamic teardrop profiles and prevent trivial collapse.",
-      tags: ["Python", "PyTorch", "PINNs", "Navier-Stokes", "2nd-Order Autograd", "Brinkman Penalization", "Topology Optimization"],
+      title: "TO-PINN: Continuous Representation Learning & Geometry Synthesis",
+      description: "Autonomous neural field synthesis framework trained end-to-end via continuous PDE residual constraints without requiring pre-labeled offline datasets. Employs second-order automatic differentiation and two-phase curriculum learning to discover optimal manifold structures.",
+      tags: ["PyTorch", "Neural Fields", "Curriculum Learning", "2nd-Order Autograd", "Representation Learning"],
       github: "https://github.com/BLACKNIGHT-cloud12/TO-PINN-Aerodynamics",
       demo: "https://github.com/BLACKNIGHT-cloud12/TO-PINN-Aerodynamics",
       featured: true,
-      badge: "Unsupervised PINN Research"
+      badge: "Unsupervised Neural Research"
     }
   ],
 
   experience: [
     {
-      role: "Scientific Machine Learning & CFD Researcher",
+      role: "Machine Learning & Deep Learning Researcher",
       company: "Jadavpur University & Open-Source Research",
       period: "2024 - Present",
-      description: "Developing unsupervised topology optimization architectures (TO-PINN), sub-millisecond aerodynamic surrogates with epistemic uncertainty guardrails (NeuroFoil), and physics-informed neural operators."
+      description: "Developing deep neural architectures, continuous operator models, and representation learning frameworks with scalable training loops and robust uncertainty metrics."
     },
     {
-      role: "Computational Engineering Practitioner",
-      company: "Aerodynamics & SciML Projects",
+      role: "Machine Learning Systems Engineer",
+      company: "Distributed ML & Systems Projects",
       period: "2023 - 2024",
-      description: "Automated end-to-end OpenFOAM C-grid simulation pipelines, integrated LibTorch runtime bindings into C++ CFD solvers, and researched spectral bias control via NTK."
+      description: "Engineered custom C++ LibTorch inference bindings, accelerated neural network forward kernels, and optimized distributed training performance."
     }
   ],
 
   posts: [
     {
       slug: "pinn-navier-stokes-conservation",
-      title: "Physics-Informed Deep Learning: Embedding Navier-Stokes Invariance into Neural Loss",
+      title: "Continuous Neural Architectures: Embedding Mathematical Invariants into Loss Manifolds",
       date: "Nov 20, 2026",
       readingTime: "7 min read",
-      tags: ["SciML", "PINNs", "Navier-Stokes", "PyTorch"],
-      excerpt: "Why unconstrained neural networks fail on fluid dynamics, and how formulating conservation of mass, momentum, and energy directly inside loss functions eliminates hallucinated physics.",
+      tags: ["Deep Learning", "Loss Manifolds", "PyTorch", "Neural Architectures"],
+      excerpt: "Why standard unconstrained neural networks suffer from generalization collapse on complex continuous manifolds, and how structuring invariant constraints directly into optimization objectives guarantees stability.",
       file: "assets/posts/pinn-navier-stokes-conservation.md"
     },
     {
       slug: "tbnn-openfoam-turbulence",
-      title: "Data-Driven Turbulence Closures: Coupling Tensor Basis Neural Networks with OpenFOAM",
+      title: "High-Performance ML Inference: Coupling Tensor Neural Networks with C++ Runtimes",
       date: "Nov 12, 2026",
       readingTime: "8 min read",
-      tags: ["OpenFOAM", "Turbulence", "LibTorch", "C++"],
-      excerpt: "Overcoming linear eddy-viscosity Boussinesq limits under strong adverse pressure gradients with Pope's tensor basis representation and C++ LibTorch solver loops.",
+      tags: ["C++", "LibTorch", "Inference Optimization", "Systems"],
+      excerpt: "Building production-grade, zero-overhead neural network inference loops by integrating PyTorch LibTorch C++ runtimes into native compiled architectures.",
       file: "assets/posts/tbnn-openfoam-turbulence.md"
     },
     {
       slug: "fourier-neural-operators",
-      title: "Learning Infinite-Dimensional Operators: From CNNs to Fourier Neural Operators (FNO)",
+      title: "Learning Infinite-Dimensional Operators: From Convolutions to Fourier Neural Operators (FNO)",
       date: "Nov 04, 2026",
       readingTime: "6 min read",
-      tags: ["Neural Operators", "FNO", "SciML", "DeepONet"],
-      excerpt: "Mesh-independent parameterization of integral kernels directly in the Fourier domain to solve parametric PDEs at orders of magnitude faster than conventional CFD.",
+      tags: ["Neural Operators", "FNO", "Deep Learning", "Representation Learning"],
+      excerpt: "Parameterizing deep learning kernels directly in the Fourier domain to learn continuous operator mappings at orders of magnitude faster than conventional iterative solvers.",
       file: "assets/posts/fourier-neural-operators.md"
     }
   ]
