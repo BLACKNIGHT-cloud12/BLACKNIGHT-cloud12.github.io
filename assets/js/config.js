@@ -54,16 +54,16 @@ window.SITE_CONFIG = {
 
   experience: [
     {
-      role: "Machine Learning & Deep Learning Researcher",
-      company: "Jadavpur University & Open-Source Research",
-      period: "2024 - Present",
-      description: "Developing deep neural architectures, continuous operator models, and representation learning frameworks with scalable training loops and robust uncertainty metrics."
+      role: "Bachelor of Engineering (B.E.)",
+      company: "Jadavpur University · Department of Civil Engineering",
+      period: "2025 - Present",
+      description: "Undergraduate Engineering Degree program in the Faculty of Engineering & Technology, Department of Civil Engineering."
     },
     {
-      role: "Machine Learning Systems Engineer",
-      company: "Distributed ML & Systems Projects",
-      period: "2023 - 2024",
-      description: "Engineered custom C++ LibTorch inference bindings, accelerated neural network forward kernels, and optimized distributed training performance."
+      role: "Undergraduate Research Fellow",
+      company: "SERB Microfluidics Lab",
+      period: "August 2026 - Present",
+      description: "Undergraduate research fellow investigating computational modeling, physical representation learning, and neural operator architectures."
     }
   ],
 

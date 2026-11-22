@@ -163,7 +163,7 @@
             <span class="text-xs font-mono text-violet-400">${item.period}</span>
           </div>
           <div class="text-sm font-medium text-slate-400 mb-2">${item.company}</div>
-          <p class="text-slate-400 light:text-slate-600 text-sm leading-relaxed">${item.description}</p>
+          ${item.description ? `<p class="text-slate-400 light:text-slate-600 text-sm leading-relaxed">${item.description}</p>` : ''}
         </div>
       `).join('');
     }
