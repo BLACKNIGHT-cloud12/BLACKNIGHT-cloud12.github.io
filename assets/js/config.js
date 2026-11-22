@@ -1,19 +1,19 @@
 /**
  * Portfolio & Blog Configuration
- * Customize your details, projects, skills, and blog posts here!
+ * AI / ML Engineer & Deep Learning Researcher
  */
 window.SITE_CONFIG = {
   profile: {
     name: "Soumik",
-    title: "Full-Stack Engineer & Creative Developer",
-    statusBadge: "Available for new projects & roles",
+    title: "AI / ML Engineer & Deep Learning Researcher",
+    statusBadge: "Training LLMs & Building AI Systems",
     location: "Global / Remote",
-    avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80", // Replace with your photo URL or assets/images/avatar.jpg
-    shortBio: "Building high-performance web applications, scalable backend systems, and interactive 3D digital experiences.",
+    avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80",
+    shortBio: "Specializing in Large Language Models (LLMs), deep neural architectures, distributed model training, and high-throughput inference engines.",
     about: `
-      I am a passionate software engineer focused on building elegant, performant, and reliable digital products. 
-      My work bridges the gap between scalable engineering architectures and delightful, interactive user interfaces.
-      I love exploring cutting-edge web technologies, creative computing with Three.js / WebGL, and writing about tech.
+      I am an AI / ML engineer focused on the intersection of deep learning research and high-performance production systems.
+      My work centers on scaling Large Language Models, optimizing inference latency with CUDA/TensorRT, fine-tuning foundation models with parameter-efficient methods (LoRA/QLoRA), and designing robust retrieval-augmented systems.
+      I'm deeply interested in distributed systems, multimodal reasoning, and building developer tools for the next generation of intelligent software.
     `,
     socials: {
       github: "https://github.com",
@@ -26,31 +26,33 @@ window.SITE_CONFIG = {
 
   skills: [
     {
-      category: "Frontend & Creative",
+      category: "Deep Learning & LLMs",
       items: [
-        { name: "JavaScript / TypeScript", level: "Expert" },
-        { name: "React / Next.js", level: "Advanced" },
-        { name: "Three.js / WebGL", level: "Advanced" },
-        { name: "Tailwind CSS", level: "Expert" },
-        { name: "HTML5 / Canvas", level: "Expert" }
+        { name: "PyTorch", level: "Expert" },
+        { name: "Hugging Face", level: "Expert" },
+        { name: "vLLM / TensorRT-LLM", level: "Advanced" },
+        { name: "LoRA / QLoRA / PEFT", level: "Advanced" },
+        { name: "LangChain / LlamaIndex", level: "Advanced" }
       ]
     },
     {
-      category: "Backend & Systems",
+      category: "ML Systems & MLOps",
       items: [
-        { name: "Node.js / Express", level: "Advanced" },
-        { name: "Python / FastAPI", level: "Advanced" },
-        { name: "PostgreSQL / Redis", level: "Intermediate" },
-        { name: "REST & GraphQL APIs", level: "Advanced" }
+        { name: "Distributed Training (FSDP / DeepSpeed)", level: "Advanced" },
+        { name: "CUDA & Triton Kernels", level: "Intermediate" },
+        { name: "Vector DBs (Qdrant, Milvus)", level: "Advanced" },
+        { name: "Ray & MLflow", level: "Advanced" },
+        { name: "Docker & Kubernetes", level: "Intermediate" }
       ]
     },
     {
-      category: "Cloud & Tooling",
+      category: "Core Engineering & Backend",
       items: [
-        { name: "Git & GitHub Actions", level: "Expert" },
-        { name: "Docker", level: "Intermediate" },
-        { name: "AWS / Cloudflare", level: "Intermediate" },
-        { name: "Linux / Shell", level: "Advanced" }
+        { name: "Python / C++", level: "Expert" },
+        { name: "FastAPI / gRPC", level: "Expert" },
+        { name: "PostgreSQL & Redis", level: "Advanced" },
+        { name: "Linux Systems & Git", level: "Expert" },
+        { name: "Three.js / WebGL", level: "Advanced" }
       ]
     }
   ],
@@ -58,29 +60,29 @@ window.SITE_CONFIG = {
   projects: [
     {
       id: "project-1",
-      title: "HyperFlow - Distributed Workflow Engine",
-      description: "A fault-tolerant distributed task execution engine built with Go and Redis, featuring a real-time visual pipeline designer and metrics dashboard.",
-      tags: ["Go", "Distributed Systems", "Redis", "React", "WebSockets"],
+      title: "TurboDec - High-Throughput Speculative Decoding",
+      description: "Low-latency inference engine combining draft model speculation with PagedAttention, achieving 2.8x faster token generation for 70B parameter models.",
+      tags: ["PyTorch", "vLLM", "CUDA", "TensorRT", "FastAPI"],
       github: "https://github.com",
       demo: "https://github.com",
       featured: true,
-      badge: "Featured Project"
+      badge: "Featured AI Project"
     },
     {
       id: "project-2",
-      title: "Nebula 3D - Audio-Reactive Particle Visualizer",
-      description: "Interactive GPU particle simulation in Three.js and Web Audio API that transforms musical frequencies into responsive 3D fluid dynamics in real time.",
-      tags: ["Three.js", "WebGL", "Web Audio API", "GLSL Shaders", "TypeScript"],
+      title: "OmniRAG - Enterprise Multi-Modal Knowledge Engine",
+      description: "Hybrid dense-sparse retrieval system indexing over 10M multimodal documents with automated cross-encoder re-ranking and sub-50ms query latency.",
+      tags: ["Qdrant", "Transformers", "Python", "Ray", "Docker"],
       github: "https://github.com",
       demo: "https://github.com",
       featured: true,
-      badge: "Creative Tech"
+      badge: "LLM & Vector Search"
     },
     {
       id: "project-3",
-      title: "PulseMetrics - Real-Time API Analytics",
-      description: "Lightweight, privacy-first API monitoring platform handling 10M+ events daily with sub-millisecond anomaly detection and automated alerting.",
-      tags: ["Python", "FastAPI", "ClickHouse", "Tailwind CSS", "Docker"],
+      title: "QuantizeX - 4-Bit Activation & Weight Quantizer",
+      description: "Automated post-training quantization pipeline supporting GPTQ and AWQ schemes with negligible perplexity loss across diverse LLM benchmarks.",
+      tags: ["PyTorch", "Hugging Face", "CUDA", "Benchmarking"],
       github: "https://github.com",
       demo: "https://github.com",
       featured: true,
@@ -88,9 +90,9 @@ window.SITE_CONFIG = {
     },
     {
       id: "project-4",
-      title: "Minimalist Markdown CMS",
-      description: "Git-backed content management system designed for developers with live previews, syntax highlighting, and zero-config static site generation.",
-      tags: ["Node.js", "Markdown", "Tailwind", "GitHub API"],
+      title: "DeepFlow - Vision-Language Action Agent",
+      description: "Embodied AI policy network mapping visual observations to robot manipulation trajectories using diffusion models and attention mechanisms.",
+      tags: ["PyTorch", "Computer Vision", "Diffusion Models", "Robotics"],
       github: "https://github.com",
       demo: "https://github.com",
       featured: false
@@ -99,53 +101,53 @@ window.SITE_CONFIG = {
 
   experience: [
     {
-      role: "Senior Software Engineer",
-      company: "Tech Systems Inc.",
+      role: "Senior Machine Learning Engineer",
+      company: "Apex AI Labs",
       period: "2024 - Present",
-      description: "Spearheaded frontend architecture modernization, reduced initial load times by 45%, and mentored junior engineers on cloud native patterns."
+      description: "Architected distributed model fine-tuning infrastructure using FSDP, reduced training iteration cycles by 40%, and deployed high-throughput vLLM clusters."
     },
     {
-      role: "Full-Stack Developer",
-      company: "Creative Cloud Labs",
+      role: "AI Research Engineer",
+      company: "Cognitive Systems Research",
       period: "2022 - 2024",
-      description: "Engineered scalable microservices, integrated real-time analytics dashboards, and built interactive WebGL product showcases."
+      description: "Researched multi-modal embedding spaces, authored internal evaluation benchmarks, and scaled vector similarity search across multi-billion token corpora."
     },
     {
-      role: "Software Engineering Intern",
-      company: "Digital Innovations",
+      role: "Machine Learning Intern",
+      company: "NeuralTech Solutions",
       period: "2021 - 2022",
-      description: "Contributed to core REST API services and implemented automated CI/CD deployment pipelines using GitHub Actions."
+      description: "Trained transformer-based classification models and automated data ingestion and quality scoring pipelines using PyTorch and Ray."
     }
   ],
 
   // Registered blog posts
   posts: [
     {
-      slug: "interactive-3d-on-the-web",
-      title: "Building High-Performance 3D Web Experiences with Three.js",
-      date: "Nov 20, 2026",
+      slug: "optimizing-llm-inference",
+      title: "Optimizing LLM Inference: KV Cache Compression, PagedAttention, and vLLM",
+      date: "Nov 21, 2026",
+      readingTime: "6 min read",
+      tags: ["LLMs", "vLLM", "CUDA", "Inference"],
+      excerpt: "An in-depth breakdown of memory bottlenecks during LLM generation, how PagedAttention cures memory fragmentation, and key strategies for batch throughput.",
+      file: "assets/posts/optimizing-llm-inference.md"
+    },
+    {
+      slug: "distributed-training-pytorch",
+      title: "Mastering Distributed Model Training in PyTorch: FSDP vs DeepSpeed",
+      date: "Nov 14, 2026",
+      readingTime: "8 min read",
+      tags: ["PyTorch", "Distributed", "DeepSpeed", "FSDP"],
+      excerpt: "A practical guide to sharding model parameters, gradients, and optimizer states across multi-node GPU clusters without out-of-memory bottlenecks.",
+      file: "assets/posts/distributed-training-pytorch.md"
+    },
+    {
+      slug: "building-production-rag",
+      title: "Architecting Production-Grade RAG: Hybrid Search and Re-Ranking",
+      date: "Nov 06, 2026",
       readingTime: "5 min read",
-      tags: ["Three.js", "WebGL", "Creative Dev"],
-      excerpt: "A deep dive into optimizing particle geometries, managing frame budgets, and handling shaders smoothly across both desktop and mobile browsers.",
-      file: "assets/posts/interactive-3d-on-the-web.md"
-    },
-    {
-      slug: "modern-frontend-architecture",
-      title: "Architecting Web Apps for Zero Build Friction and Maximum Speed",
-      date: "Nov 12, 2026",
-      readingTime: "7 min read",
-      tags: ["Architecture", "JavaScript", "Performance"],
-      excerpt: "Why modern vanilla web standards, utility-first CSS, and modern CDNs are making complex build chains optional for many developer websites.",
-      file: "assets/posts/modern-frontend-architecture.md"
-    },
-    {
-      slug: "mastering-github-pages",
-      title: "Everything You Need to Know to Host Your Portfolio on GitHub Pages",
-      date: "Nov 05, 2026",
-      readingTime: "4 min read",
-      tags: ["GitHub Pages", "DevOps", "Guide"],
-      excerpt: "Step-by-step walkthrough of custom domains, GitHub Actions workflows, SSL certificates, and SEO optimization for your personal github.io site.",
-      file: "assets/posts/mastering-github-pages.md"
+      tags: ["RAG", "Vector Search", "LLMs", "Architecture"],
+      excerpt: "Moving beyond naive vector retrieval: implementing reciprocal rank fusion (RRF), cross-encoder re-ranking, and chunking strategies that prevent hallucination.",
+      file: "assets/posts/building-production-rag.md"
     }
   ]
 };

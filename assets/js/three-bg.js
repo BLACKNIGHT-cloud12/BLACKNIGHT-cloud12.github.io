@@ -1,10 +1,12 @@
 /**
- * Three.js 3D Interactive Background
+ * Three.js 3D Interactive Digital Wave Grid Background
+ * 
  * Features:
- * - Particle network constellation + floating wireframe geometry
- * - Smooth camera parallax following cursor / touch
- * - Theme-reactive colors (Dark mode neon vs Light mode slate/blue)
- * - Battery-friendly visibility and performance throttling
+ * - Dynamic undulating 3D wireframe cyber terrain / digital mesh
+ * - Glowing intersection nodes
+ * - Interactive mouse ripple & cursor perturbation
+ * - Theme-reactive colors (Dark mode cyber cyan/indigo vs Light mode slate/blue)
+ * - Battery-friendly visibility throttling
  */
 
 (function () {
@@ -13,45 +15,45 @@
   const canvas = document.getElementById('three-bg-canvas');
   if (!canvas) return;
 
-  // Configuration settings
+  // Grid Configuration
   const CONFIG = {
-    particleCount: window.innerWidth < 768 ? 70 : 130,
-    maxDistance: 130,
-    mouseSensitivity: 0.0006,
-    cameraZ: 700,
-    rotationSpeed: 0.0008,
+    gridWidth: 1600,
+    gridDepth: 1400,
+    segmentsX: window.innerWidth < 768 ? 40 : 60,
+    segmentsY: window.innerWidth < 768 ? 40 : 55,
+    cameraHeight: 220,
+    cameraDistance: 540,
+    cameraPitch: -0.32,
+    waveSpeed: 0.0016,
+    waveHeight: 32,
+    mouseWaveRadius: 300,
+    mouseSensitivity: 0.0008,
   };
 
-  // State
   let scene, camera, renderer;
-  let particlesGeometry, particlesMesh;
-  let linesMesh, linesGeometry;
-  let floatingShapes = [];
-  let mouse = { x: 0, y: 0, targetX: 0, targetY: 0 };
-  let windowHalfX = window.innerWidth / 2;
-  let windowHalfY = window.innerHeight / 2;
+  let wireframeMesh, pointsMesh;
+  let geometry;
+  let originalPositions;
+  let mouse = { x: 0, y: 0, targetX: 0, targetY: 0, worldX: 0, worldZ: 0 };
   let isVisible = true;
-  let isDarkMode = document.documentElement.classList.contains('dark') || !('theme' in localStorage);
 
-  // Color palettes
+  // Theme Palette definitions
   const THEMES = {
     dark: {
-      particleColor: 0x6366f1, // Indigo-500
-      particleSecondary: 0x38bdf8, // Sky-400
-      lineColor: 0x818cf8, // Indigo-400
-      lineOpacity: 0.18,
-      shapeColor: 0x4f46e5,
-      shapeOpacity: 0.12,
-      fogColor: 0x090d16
+      gridColor: 0x6366f1,        // Indigo-500
+      gridOpacity: 0.35,
+      pointsColor: 0x38bdf8,      // Sky-400 cyan
+      pointsOpacity: 0.85,
+      fogColor: 0x070b14,
+      fogDensity: 0.0012
     },
     light: {
-      particleColor: 0x4f46e5, // Indigo-600
-      particleSecondary: 0x0284c7, // Sky-600
-      lineColor: 0x6366f1,
-      lineOpacity: 0.12,
-      shapeColor: 0x6366f1,
-      shapeOpacity: 0.08,
-      fogColor: 0xf8fafc
+      gridColor: 0x4f46e5,        // Indigo-600
+      gridOpacity: 0.22,
+      pointsColor: 0x0284c7,      // Sky-600
+      pointsOpacity: 0.70,
+      fogColor: 0xf8fafc,
+      fogDensity: 0.0011
     }
   };
 
@@ -60,15 +62,17 @@
   }
 
   function init() {
-    // 1. Scene & Camera
+    // 1. Scene & Depth Fog
     scene = new THREE.Scene();
-    const currentTheme = getCurrentTheme();
-    scene.fog = new THREE.FogExp2(currentTheme.fogColor, 0.0009);
+    const theme = getCurrentTheme();
+    scene.fog = new THREE.FogExp2(theme.fogColor, theme.fogDensity);
 
-    camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 1, 2000);
-    camera.position.z = CONFIG.cameraZ;
+    // 2. Camera Setup (Perspective looking across the digital ocean grid)
+    camera = new THREE.PerspectiveCamera(55, window.innerWidth / window.innerHeight, 1, 3000);
+    camera.position.set(0, CONFIG.cameraHeight, CONFIG.cameraDistance);
+    camera.rotation.x = CONFIG.cameraPitch;
 
-    // 2. Renderer
+    // 3. WebGL Renderer
     renderer = new THREE.WebGLRenderer({
       canvas: canvas,
       alpha: true,
@@ -78,11 +82,8 @@
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
-    // 3. Create Particles
-    createParticles();
-
-    // 4. Create Floating Wireframe Polyhedra
-    createFloatingGeometry();
+    // 4. Create the Digital Wave Terrain
+    createWaveGrid();
 
     // 5. Event Listeners
     window.addEventListener('resize', onWindowResize, { passive: true });
@@ -90,181 +91,118 @@
     window.addEventListener('touchmove', onTouchMove, { passive: true });
     document.addEventListener('visibilitychange', onVisibilityChange);
 
-    // Watch for theme changes (dark/light toggle)
+    // Watch for dark/light mode toggle
     const observer = new MutationObserver(onThemeChange);
     observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
 
-    // 6. Start Loop
-    animate();
+    // 6. Begin Animation Loop
+    animate(0);
   }
 
-  // Particle positions and velocity data
-  let positions, velocities, particleData = [];
-
-  function createParticles() {
-    const count = CONFIG.particleCount;
-    positions = new Float32Array(count * 3);
-    const colors = new Float32Array(count * 3);
+  function createWaveGrid() {
     const theme = getCurrentTheme();
 
-    const color1 = new THREE.Color(theme.particleColor);
-    const color2 = new THREE.Color(theme.particleSecondary);
+    // Create plane geometry facing upward
+    geometry = new THREE.PlaneGeometry(
+      CONFIG.gridWidth,
+      CONFIG.gridDepth,
+      CONFIG.segmentsX,
+      CONFIG.segmentsY
+    );
+    // Rotate to lay flat like a floor / digital matrix ocean
+    geometry.rotateX(-Math.PI / 2);
 
-    for (let i = 0; i < count; i++) {
-      const i3 = i * 3;
-      // Spread in 3D volume
-      positions[i3] = (Math.random() - 0.5) * 1100;
-      positions[i3 + 1] = (Math.random() - 0.5) * 900;
-      positions[i3 + 2] = (Math.random() - 0.5) * 600;
+    // Store original flat positions for wave calculations
+    const posAttr = geometry.attributes.position;
+    originalPositions = new Float32Array(posAttr.array.length);
+    originalPositions.set(posAttr.array);
 
-      // Random velocities
-      particleData.push({
-        velocity: new THREE.Vector3(
-          (Math.random() - 0.5) * 0.7,
-          (Math.random() - 0.5) * 0.7,
-          (Math.random() - 0.5) * 0.7
-        ),
-        numConnections: 0
-      });
+    // Wireframe Mesh for the cyber grid
+    const wireframeMaterial = new THREE.MeshBasicMaterial({
+      color: theme.gridColor,
+      wireframe: true,
+      transparent: true,
+      opacity: theme.gridOpacity,
+      blending: THREE.AdditiveBlending
+    });
+    wireframeMesh = new THREE.Mesh(geometry, wireframeMaterial);
+    scene.add(wireframeMesh);
 
-      // Subtle gradient color per particle
-      const mixedColor = color1.clone().lerp(color2, Math.random());
-      colors[i3] = mixedColor.r;
-      colors[i3 + 1] = mixedColor.g;
-      colors[i3 + 2] = mixedColor.b;
-    }
-
-    particlesGeometry = new THREE.BufferGeometry();
-    particlesGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3).setUsage(THREE.DynamicDrawUsage));
-    particlesGeometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
-
-    // Create glowing circle particle texture programmatically
-    const particleTexture = createCircleTexture();
-
-    const particlesMaterial = new THREE.PointsMaterial({
-      size: window.innerWidth < 768 ? 6 : 8,
+    // Glowing Intersection Nodes (Points) on each vertex
+    const particleTexture = createGlowTexture();
+    const pointsMaterial = new THREE.PointsMaterial({
+      color: theme.pointsColor,
+      size: window.innerWidth < 768 ? 4 : 5.5,
       map: particleTexture,
       transparent: true,
-      opacity: 0.85,
-      vertexColors: true,
+      opacity: theme.pointsOpacity,
       blending: THREE.AdditiveBlending,
       depthWrite: false
     });
-
-    particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
-    scene.add(particlesMesh);
-
-    // Dynamic Connecting Lines
-    const maxLines = (count * (count - 1)) / 2;
-    const linePositions = new Float32Array(maxLines * 6);
-    const lineColors = new Float32Array(maxLines * 6);
-
-    linesGeometry = new THREE.BufferGeometry();
-    linesGeometry.setAttribute('position', new THREE.BufferAttribute(linePositions, 3).setUsage(THREE.DynamicDrawUsage));
-    linesGeometry.setAttribute('color', new THREE.BufferAttribute(lineColors, 3).setUsage(THREE.DynamicDrawUsage));
-
-    const linesMaterial = new THREE.LineBasicMaterial({
-      vertexColors: true,
-      transparent: true,
-      opacity: theme.lineOpacity,
-      blending: THREE.AdditiveBlending,
-      depthWrite: false
-    });
-
-    linesMesh = new THREE.LineSegments(linesGeometry, linesMaterial);
-    scene.add(linesMesh);
+    pointsMesh = new THREE.Points(geometry, pointsMaterial);
+    scene.add(pointsMesh);
   }
 
-  function createCircleTexture() {
+  function createGlowTexture() {
     const canvas = document.createElement('canvas');
-    canvas.width = 64;
-    canvas.height = 64;
+    canvas.width = 32;
+    canvas.height = 32;
     const ctx = canvas.getContext('2d');
 
-    const gradient = ctx.createRadialGradient(32, 32, 0, 32, 32, 32);
-    gradient.addColorStop(0, 'rgba(255, 255, 255, 1)');
-    gradient.addColorStop(0.3, 'rgba(200, 225, 255, 0.8)');
-    gradient.addColorStop(0.7, 'rgba(100, 150, 255, 0.2)');
-    gradient.addColorStop(1, 'rgba(0, 0, 0, 0)');
+    const grad = ctx.createRadialGradient(16, 16, 0, 16, 16, 16);
+    grad.addColorStop(0, 'rgba(255, 255, 255, 1)');
+    grad.addColorStop(0.3, 'rgba(56, 189, 248, 0.9)');
+    grad.addColorStop(0.7, 'rgba(99, 102, 241, 0.3)');
+    grad.addColorStop(1, 'rgba(0, 0, 0, 0)');
 
-    ctx.fillStyle = gradient;
-    ctx.fillRect(0, 0, 64, 64);
+    ctx.fillStyle = grad;
+    ctx.fillRect(0, 0, 32, 32);
 
     const texture = new THREE.Texture(canvas);
     texture.needsUpdate = true;
     return texture;
   }
 
-  function createFloatingGeometry() {
-    const theme = getCurrentTheme();
-    const shapes = [
-      new THREE.IcosahedronGeometry(75, 1),
-      new THREE.OctahedronGeometry(60, 0),
-      new THREE.TorusGeometry(55, 15, 12, 36)
-    ];
-
-    const positionsArr = [
-      { x: -320, y: 160, z: -180 },
-      { x: 340, y: -120, z: -200 },
-      { x: 280, y: 220, z: -260 }
-    ];
-
-    shapes.forEach((geom, idx) => {
-      const wireframeGeom = new THREE.WireframeGeometry(geom);
-      const wireframeMaterial = new THREE.LineBasicMaterial({
-        color: theme.shapeColor,
-        transparent: true,
-        opacity: theme.shapeOpacity,
-        blending: THREE.AdditiveBlending
-      });
-
-      const shapeMesh = new THREE.LineSegments(wireframeGeom, wireframeMaterial);
-      const pos = positionsArr[idx % positionsArr.length];
-      shapeMesh.position.set(pos.x, pos.y, pos.z);
-      shapeMesh.userData = {
-        rotX: (Math.random() - 0.5) * 0.008,
-        rotY: (Math.random() - 0.5) * 0.008,
-        floatSpeed: 0.001 + Math.random() * 0.001,
-        initialY: pos.y
-      };
-
-      scene.add(shapeMesh);
-      floatingShapes.push(shapeMesh);
-    });
-  }
-
   function onThemeChange() {
     const theme = getCurrentTheme();
     if (scene && scene.fog) {
       scene.fog.color.setHex(theme.fogColor);
+      scene.fog.density = theme.fogDensity;
     }
-    if (linesMesh && linesMesh.material) {
-      linesMesh.material.opacity = theme.lineOpacity;
+    if (wireframeMesh && wireframeMesh.material) {
+      wireframeMesh.material.color.setHex(theme.gridColor);
+      wireframeMesh.material.opacity = theme.gridOpacity;
     }
-    floatingShapes.forEach(shape => {
-      if (shape.material) {
-        shape.material.color.setHex(theme.shapeColor);
-        shape.material.opacity = theme.shapeOpacity;
-      }
-    });
+    if (pointsMesh && pointsMesh.material) {
+      pointsMesh.material.color.setHex(theme.pointsColor);
+      pointsMesh.material.opacity = theme.pointsOpacity;
+    }
   }
 
-  function onMouseMove(event) {
-    mouse.targetX = (event.clientX - windowHalfX) * CONFIG.mouseSensitivity;
-    mouse.targetY = (event.clientY - windowHalfY) * CONFIG.mouseSensitivity;
+  function onMouseMove(e) {
+    const nx = (e.clientX / window.innerWidth) * 2 - 1;
+    const ny = -(e.clientY / window.innerHeight) * 2 + 1;
+    mouse.targetX = nx * 80;
+    mouse.targetY = ny * 40;
+
+    // Approximate 3D world projection for interactive ripples
+    mouse.worldX = nx * (CONFIG.gridWidth * 0.45);
+    mouse.worldZ = -ny * (CONFIG.gridDepth * 0.45);
   }
 
-  function onTouchMove(event) {
-    if (event.touches.length > 0) {
-      mouse.targetX = (event.touches[0].clientX - windowHalfX) * CONFIG.mouseSensitivity * 0.7;
-      mouse.targetY = (event.touches[0].clientY - windowHalfY) * CONFIG.mouseSensitivity * 0.7;
+  function onTouchMove(e) {
+    if (e.touches.length > 0) {
+      const touch = e.touches[0];
+      const nx = (touch.clientX / window.innerWidth) * 2 - 1;
+      const ny = -(touch.clientY / window.innerHeight) * 2 + 1;
+      mouse.targetX = nx * 60;
+      mouse.targetY = ny * 30;
+      mouse.worldX = nx * (CONFIG.gridWidth * 0.4);
+      mouse.worldZ = -ny * (CONFIG.gridDepth * 0.4);
     }
   }
 
   function onWindowResize() {
-    windowHalfX = window.innerWidth / 2;
-    windowHalfY = window.innerHeight / 2;
-
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
 
@@ -276,102 +214,54 @@
     isVisible = !document.hidden;
   }
 
-  function animate(time) {
+  function animate(timestamp) {
     requestAnimationFrame(animate);
 
-    if (!isVisible) return;
+    if (!isVisible || !geometry) return;
 
     // Smooth cursor interpolation (lerp)
     mouse.x += (mouse.targetX - mouse.x) * 0.05;
     mouse.y += (mouse.targetY - mouse.y) * 0.05;
 
-    // Gentle camera orbit based on mouse
-    camera.position.x += (mouse.x * 250 - camera.position.x) * 0.04;
-    camera.position.y += (-mouse.y * 200 - camera.position.y) * 0.04;
-    camera.lookAt(scene.position);
+    // Subtle camera parallax tilt
+    camera.position.x = mouse.x;
+    camera.position.y = CONFIG.cameraHeight + mouse.y * 0.5;
+    camera.lookAt(0, 0, -250);
 
-    // Slowly rotate scene
-    scene.rotation.y += CONFIG.rotationSpeed * 0.5;
+    const pos = geometry.attributes.position.array;
+    const count = pos.length / 3;
+    const t = timestamp * CONFIG.waveSpeed;
 
-    // Animate floating geometric wireframes
-    const timeSec = time * 0.001;
-    floatingShapes.forEach((shape) => {
-      shape.rotation.x += shape.userData.rotX;
-      shape.rotation.y += shape.userData.rotY;
-      shape.position.y = shape.userData.initialY + Math.sin(timeSec * 1.5 + shape.position.x) * 20;
-    });
-
-    // Update particle positions and connection lines
-    let vertexPosIndex = 0;
-    let colorPosIndex = 0;
-    let numConnectedLines = 0;
-
-    const count = CONFIG.particleCount;
-    const posAttr = particlesGeometry.attributes.position.array;
-    const linePosAttr = linesGeometry.attributes.position.array;
-    const lineColAttr = linesGeometry.attributes.color.array;
-
-    const theme = getCurrentTheme();
-    const lColor = new THREE.Color(theme.lineColor);
-
+    // Update vertex wave height
     for (let i = 0; i < count; i++) {
       const i3 = i * 3;
-      particleData[i].numConnections = 0;
+      const x = originalPositions[i3];
+      const z = originalPositions[i3 + 2];
 
-      // Update positions
-      posAttr[i3] += particleData[i].velocity.x;
-      posAttr[i3 + 1] += particleData[i].velocity.y;
-      posAttr[i3 + 2] += particleData[i].velocity.z;
+      // Dual harmonic sine wave equation for cyber terrain flow
+      const wave1 = Math.sin(x * 0.007 + t) * Math.cos(z * 0.007 + t * 0.8) * CONFIG.waveHeight;
+      const wave2 = Math.sin((x + z) * 0.004 + t * 1.2) * 14;
 
-      // Boundaries bounce
-      if (posAttr[i3] < -550 || posAttr[i3] > 550) particleData[i].velocity.x = -particleData[i].velocity.x;
-      if (posAttr[i3 + 1] < -450 || posAttr[i3 + 1] > 450) particleData[i].velocity.y = -particleData[i].velocity.y;
-      if (posAttr[i3 + 2] < -350 || posAttr[i3 + 2] > 350) particleData[i].velocity.z = -particleData[i].velocity.z;
+      // Distance from mouse projection for interactive cursor ripple
+      const dx = x - mouse.worldX;
+      const dz = z - mouse.worldZ;
+      const dist = Math.sqrt(dx * dx + dz * dz);
+      let mouseRipple = 0;
 
-      // Check distance with subsequent particles for line connections
-      for (let j = i + 1; j < count; j++) {
-        const j3 = j * 3;
-        const dx = posAttr[i3] - posAttr[j3];
-        const dy = posAttr[i3 + 1] - posAttr[j3 + 1];
-        const dz = posAttr[i3 + 2] - posAttr[j3 + 2];
-        const dist = Math.sqrt(dx * dx + dy * dy + dz * dz);
-
-        if (dist < CONFIG.maxDistance) {
-          particleData[i].numConnections++;
-          particleData[j].numConnections++;
-
-          const alpha = (1.0 - dist / CONFIG.maxDistance);
-
-          linePosAttr[vertexPosIndex++] = posAttr[i3];
-          linePosAttr[vertexPosIndex++] = posAttr[i3 + 1];
-          linePosAttr[vertexPosIndex++] = posAttr[i3 + 2];
-
-          linePosAttr[vertexPosIndex++] = posAttr[j3];
-          linePosAttr[vertexPosIndex++] = posAttr[j3 + 1];
-          linePosAttr[vertexPosIndex++] = posAttr[j3 + 2];
-
-          lineColAttr[colorPosIndex++] = lColor.r * alpha;
-          lineColAttr[colorPosIndex++] = lColor.g * alpha;
-          lineColAttr[colorPosIndex++] = lColor.b * alpha;
-
-          lineColAttr[colorPosIndex++] = lColor.r * alpha;
-          lineColAttr[colorPosIndex++] = lColor.g * alpha;
-          lineColAttr[colorPosIndex++] = lColor.b * alpha;
-
-          numConnectedLines++;
-        }
+      if (dist < CONFIG.mouseWaveRadius) {
+        const factor = 1 - dist / CONFIG.mouseWaveRadius;
+        mouseRipple = Math.sin(dist * 0.05 - t * 3) * (factor * 35);
       }
+
+      // Update Y (height)
+      pos[i3 + 1] = wave1 + wave2 + mouseRipple;
     }
 
-    linesGeometry.setDrawRange(0, numConnectedLines * 2);
-    linesGeometry.attributes.position.needsUpdate = true;
-    linesGeometry.attributes.color.needsUpdate = true;
-    particlesGeometry.attributes.position.needsUpdate = true;
+    geometry.attributes.position.needsUpdate = true;
 
     renderer.render(scene, camera);
   }
 
-  // Initialize once DOM is ready
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', init);
   } else {
