@@ -229,23 +229,31 @@
     });
   }
 
-  // 6. Copy Email Interaction
-  const copyEmailBtn = document.getElementById('copy-email-btn');
-  if (copyEmailBtn) {
-    copyEmailBtn.addEventListener('click', () => {
-      const email = window.SITE_CONFIG?.profile?.socials?.email?.replace('mailto:', '') || 'hello@example.com';
-      navigator.clipboard.writeText(email).then(() => {
-        const originalText = copyEmailBtn.innerHTML;
-        copyEmailBtn.innerHTML = `
-          <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-          <span class="text-emerald-400 font-medium">Copied to clipboard!</span>
+  // 6. Copy Email Interactions (Personal & College)
+  function setupCopyButton(btnId, emailAddress, label) {
+    const btn = document.getElementById(btnId);
+    if (!btn) return;
+
+    btn.addEventListener('click', () => {
+      navigator.clipboard.writeText(emailAddress).then(() => {
+        const originalHTML = btn.innerHTML;
+        btn.innerHTML = `
+          <svg class="w-3.5 h-3.5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+          <span class="text-emerald-400 font-medium">Copied!</span>
         `;
         setTimeout(() => {
-          copyEmailBtn.innerHTML = originalText;
+          btn.innerHTML = originalHTML;
         }, 2200);
       });
     });
   }
+
+  const personalEmail = window.SITE_CONFIG?.profile?.emails?.personal || 'soumikghosh30.03.07@gmail.com';
+  const collegeEmail = window.SITE_CONFIG?.profile?.emails?.college || 'soumikg.civil.ug@jadavpuruniversity.in';
+
+  setupCopyButton('copy-personal-email-btn', personalEmail, 'Personal');
+  setupCopyButton('copy-college-email-btn', collegeEmail, 'College');
+  setupCopyButton('copy-email-btn', personalEmail, 'Email');
 
   // Initialize
   function initAll() {

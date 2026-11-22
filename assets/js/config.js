@@ -1,25 +1,30 @@
 /**
  * Portfolio & Blog Configuration
  * Soumik Ghosh (BLACKNIGHT-cloud12)
- * Scientific Machine Learning (SciML) · Computational Fluid Dynamics · Quant
+ * Jadavpur University · Scientific Machine Learning (SciML) · CFD
  */
 window.SITE_CONFIG = {
   profile: {
     name: "Soumik Ghosh",
     title: "Scientific Machine Learning (SciML) & Computational Engineering",
+    affiliation: "Jadavpur University, Kolkata",
     statusBadge: "Where Navier-Stokes Meets Deep Learning",
     location: "Kolkata, India",
     avatar: "https://avatars.githubusercontent.com/u/238549548?v=4",
-    shortBio: "Building machine learning architectures that respect physical conservation laws. Specializing in physics-informed neural operators (PINO, FNO), aerodynamic topology optimization (TO-PINN), and sub-millisecond SciML surrogates (NeuroFoil).",
+    shortBio: "Undergraduate researcher at Jadavpur University building machine learning architectures that respect physical conservation laws. Specializing in physics-informed neural operators (PINO, FNO), aerodynamic topology optimization (TO-PINN), and sub-millisecond SciML surrogates (NeuroFoil).",
     about: `
-      I am a Scientific Machine Learning (SciML) and Computational Engineering practitioner working at the intersection of fluid dynamics, physics-informed deep learning, and quantitative modeling.
+      I am a Scientific Machine Learning (SciML) and Computational Engineering practitioner at Jadavpur University working at the intersection of fluid dynamics, physics-informed deep learning, and quantitative modeling.
       My work focuses on building architectures that do not treat physical systems as black-box interpolators, but instead respect the underlying conservation laws (Navier-Stokes mass, momentum, and energy conservation, frame indifference, and thermodynamics).
     `,
+    emails: {
+      personal: "soumikghosh30.03.07@gmail.com",
+      college: "soumikg.civil.ug@jadavpuruniversity.in"
+    },
     socials: {
       github: "https://github.com/BLACKNIGHT-cloud12",
       linkedin: "https://www.linkedin.com/in/soumik-ghosh-434164377",
       email: "mailto:soumikghosh30.03.07@gmail.com",
-      twitter: ""
+      collegeEmail: "mailto:soumikg.civil.ug@jadavpuruniversity.in"
     },
     resumeUrl: "https://www.linkedin.com/in/soumik-ghosh-434164377"
   },
@@ -51,7 +56,7 @@ window.SITE_CONFIG = {
   experience: [
     {
       role: "Scientific Machine Learning & CFD Researcher",
-      company: "Independent Research & Open-Source",
+      company: "Jadavpur University & Open-Source Research",
       period: "2024 - Present",
       description: "Developing unsupervised topology optimization architectures (TO-PINN), sub-millisecond aerodynamic surrogates with epistemic uncertainty guardrails (NeuroFoil), and physics-informed neural operators."
     },
