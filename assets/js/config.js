@@ -1,58 +1,60 @@
 /**
  * Portfolio & Blog Configuration
- * AI / ML Engineer & Deep Learning Researcher
+ * Tailored for Soumik Ghosh (BLACKNIGHT-cloud12)
+ * Scientific Machine Learning (SciML) · Computational Fluid Dynamics · Quant
  */
 window.SITE_CONFIG = {
   profile: {
-    name: "Soumik",
-    title: "AI / ML Engineer & Deep Learning Researcher",
-    statusBadge: "Training LLMs & Building AI Systems",
-    location: "Global / Remote",
-    avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80",
-    shortBio: "Specializing in Large Language Models (LLMs), deep neural architectures, distributed model training, and high-throughput inference engines.",
+    name: "Soumik Ghosh",
+    title: "Scientific Machine Learning (SciML) & Computational Engineering",
+    statusBadge: "Where Navier-Stokes Meets Deep Learning",
+    location: "Kolkata, India",
+    avatar: "https://avatars.githubusercontent.com/u/238549548?v=4",
+    shortBio: "Building machine learning architectures that respect physical conservation laws. Specializing in physics-informed neural operators (PINO, FNO), data-driven turbulence closures (TBNN + OpenFOAM), and quantitative modeling.",
     about: `
-      I am an AI / ML engineer focused on the intersection of deep learning research and high-performance production systems.
-      My work centers on scaling Large Language Models, optimizing inference latency with CUDA/TensorRT, fine-tuning foundation models with parameter-efficient methods (LoRA/QLoRA), and designing robust retrieval-augmented systems.
-      I'm deeply interested in distributed systems, multimodal reasoning, and building developer tools for the next generation of intelligent software.
+      I am a Scientific Machine Learning (SciML) and Computational Engineering practitioner working at the intersection of fluid dynamics, physics-informed deep learning, and quantitative modeling.
+      My work focuses on building architectures that do not treat physical systems as black-box interpolators, but instead respect the underlying conservation laws (Navier-Stokes mass, momentum, and energy conservation, frame indifference, and thermodynamics).
     `,
     socials: {
-      github: "https://github.com",
-      linkedin: "https://linkedin.com",
-      twitter: "https://twitter.com",
-      email: "mailto:your-email@example.com"
+      github: "https://github.com/BLACKNIGHT-cloud12",
+      linkedin: "https://www.linkedin.com/in/soumik-ghosh-434164377",
+      email: "mailto:soumikghosh30.03.07@gmail.com",
+      twitter: ""
     },
-    resumeUrl: "#contact"
+    resumeUrl: "https://www.linkedin.com/in/soumik-ghosh-434164377"
   },
 
   skills: [
     {
-      category: "Deep Learning & LLMs",
+      category: "SciML & Deep Learning",
       items: [
         { name: "PyTorch", level: "Expert" },
-        { name: "Hugging Face", level: "Expert" },
-        { name: "vLLM / TensorRT-LLM", level: "Advanced" },
-        { name: "LoRA / QLoRA / PEFT", level: "Advanced" },
-        { name: "LangChain / LlamaIndex", level: "Advanced" }
+        { name: "PINNs & DeepONet", level: "Expert" },
+        { name: "Neural Operators (FNO, PINO)", level: "Advanced" },
+        { name: "JAX & Automatic Diff", level: "Advanced" },
+        { name: "LibTorch C++", level: "Advanced" },
+        { name: "SciPy / NumPy", level: "Expert" }
       ]
     },
     {
-      category: "ML Systems & MLOps",
+      category: "CFD & Computational Fluid Dynamics",
       items: [
-        { name: "Distributed Training (FSDP / DeepSpeed)", level: "Advanced" },
-        { name: "CUDA & Triton Kernels", level: "Intermediate" },
-        { name: "Vector DBs (Qdrant, Milvus)", level: "Advanced" },
-        { name: "Ray & MLflow", level: "Advanced" },
-        { name: "Docker & Kubernetes", level: "Intermediate" }
+        { name: "OpenFOAM (v2606)", level: "Advanced" },
+        { name: "Turbulence Modeling (k-ω SST, RANS)", level: "Advanced" },
+        { name: "TBNN (Reynolds Stress Anisotropy)", level: "Advanced" },
+        { name: "ParaView", level: "Advanced" },
+        { name: "Aero-Structural Wingbox Analysis", level: "Advanced" }
       ]
     },
     {
-      category: "Core Engineering & Backend",
+      category: "Systems, 3D & Production",
       items: [
-        { name: "Python / C++", level: "Expert" },
-        { name: "FastAPI / gRPC", level: "Expert" },
-        { name: "PostgreSQL & Redis", level: "Advanced" },
-        { name: "Linux Systems & Git", level: "Expert" },
-        { name: "Three.js / WebGL", level: "Advanced" }
+        { name: "C++ / Python", level: "Expert" },
+        { name: "Linux / WSL2 / Bash", level: "Expert" },
+        { name: "Three.js / WebGL", level: "Advanced" },
+        { name: "FastAPI / Next.js", level: "Advanced" },
+        { name: "Docker", level: "Intermediate" },
+        { name: "Git & GitHub Actions", level: "Expert" }
       ]
     }
   ],
@@ -60,94 +62,97 @@ window.SITE_CONFIG = {
   projects: [
     {
       id: "project-1",
-      title: "TurboDec - High-Throughput Speculative Decoding",
-      description: "Low-latency inference engine combining draft model speculation with PagedAttention, achieving 2.8x faster token generation for 70B parameter models.",
-      tags: ["PyTorch", "vLLM", "CUDA", "TensorRT", "FastAPI"],
-      github: "https://github.com",
-      demo: "https://github.com",
+      title: "NeuroFoil-Core: Industrial SciML Aerodynamic Platform",
+      description: "End-to-end automated OpenFOAM-to-SciML surrogate platform predicting aerodynamic forces (CL, CD, Cm) and continuous 161-point pressure fields Cp(x) with sub-millisecond latency (R² = 0.992), coupled with wingbox structural sizing and Mahalanobis epistemic uncertainty quantification.",
+      tags: ["Python", "C++", "OpenFOAM", "PyTorch", "MDAO", "SciPy"],
+      github: "https://github.com/BLACKNIGHT-cloud12/NeuroFoil-Core",
+      demo: "https://github.com/BLACKNIGHT-cloud12/NeuroFoil-Core",
       featured: true,
-      badge: "Featured AI Project"
+      badge: "Flagship SciML"
     },
     {
       id: "project-2",
-      title: "OmniRAG - Enterprise Multi-Modal Knowledge Engine",
-      description: "Hybrid dense-sparse retrieval system indexing over 10M multimodal documents with automated cross-encoder re-ranking and sub-50ms query latency.",
-      tags: ["Qdrant", "Transformers", "Python", "Ray", "Docker"],
-      github: "https://github.com",
-      demo: "https://github.com",
+      title: "tbnnFoam: Data-Driven Turbulence Closures in OpenFOAM",
+      description: "Galilean-invariant Tensor Basis Neural Networks for RANS Reynolds stress anisotropy closures. Enforces material frame indifference under spatial rotations, integrated directly into OpenFOAM C++ solver loops via LibTorch runtime bindings.",
+      tags: ["C++", "OpenFOAM", "LibTorch", "Tensor Algebra", "Turbulence"],
+      github: "https://github.com/BLACKNIGHT-cloud12/tbnnFoam",
+      demo: "https://github.com/BLACKNIGHT-cloud12/tbnnFoam",
       featured: true,
-      badge: "LLM & Vector Search"
+      badge: "OpenFOAM & C++"
     },
     {
       id: "project-3",
-      title: "QuantizeX - 4-Bit Activation & Weight Quantizer",
-      description: "Automated post-training quantization pipeline supporting GPTQ and AWQ schemes with negligible perplexity loss across diverse LLM benchmarks.",
-      tags: ["PyTorch", "Hugging Face", "CUDA", "Benchmarking"],
-      github: "https://github.com",
-      demo: "https://github.com",
+      title: "TO-PINN-Aerodynamics: Unsupervised Topology Optimization",
+      description: "Aerodynamic shape and topology optimization directly governed by Navier-Stokes PDE loss constraints without relying on costly discrete adjoint CFD solvers. Embeds SIMP density penalties within PINN loss formulations.",
+      tags: ["Python", "PyTorch", "PINNs", "Navier-Stokes", "AutoDiff"],
+      github: "https://github.com/BLACKNIGHT-cloud12/TO-PINN-Aerodynamics",
+      demo: "https://github.com/BLACKNIGHT-cloud12/TO-PINN-Aerodynamics",
       featured: true,
-      badge: "Open Source"
+      badge: "Research"
     },
     {
       id: "project-4",
-      title: "DeepFlow - Vision-Language Action Agent",
-      description: "Embodied AI policy network mapping visual observations to robot manipulation trajectories using diffusion models and attention mechanisms.",
-      tags: ["PyTorch", "Computer Vision", "Diffusion Models", "Robotics"],
-      github: "https://github.com",
-      demo: "https://github.com",
+      title: "real-estate-lob-ssm: Deep State Space Models",
+      description: "Deep State Space Model (SSM) for Real Estate Limit Order Book (LOB) counterfactual simulations with a nested Next.js frontend for quantitative market microstructure modeling.",
+      tags: ["TypeScript", "Python", "State Space Models", "Next.js", "Quant"],
+      github: "https://github.com/BLACKNIGHT-cloud12/real-estate-lob-ssm",
+      demo: "https://github.com/BLACKNIGHT-cloud12/real-estate-lob-ssm",
       featured: false
+    },
+    {
+      id: "project-5",
+      title: "3D Web & Interactive Graphics Agent Skills",
+      description: "A suite of production agent skills for modern creative web development: 3d-hero-interactions (pointer parallax, magnetic buttons), 3d-physics-simulations (Rapier, GPU particles), and AI website design tokens.",
+      tags: ["Three.js", "WebGL", "GLSL", "Physics", "Design Systems"],
+      github: "https://github.com/BLACKNIGHT-cloud12/3d-hero-interactions",
+      demo: "https://github.com/BLACKNIGHT-cloud12/ai-website-aesthetics",
+      featured: false,
+      badge: "Creative Tech"
     }
   ],
 
   experience: [
     {
-      role: "Senior Machine Learning Engineer",
-      company: "Apex AI Labs",
+      role: "Scientific Machine Learning & CFD Researcher",
+      company: "Independent Research & Open-Source",
       period: "2024 - Present",
-      description: "Architected distributed model fine-tuning infrastructure using FSDP, reduced training iteration cycles by 40%, and deployed high-throughput vLLM clusters."
+      description: "Developing neural turbulence closures (TBNN), sub-millisecond aerodynamic surrogates with epistemic uncertainty guardrails, and physics-informed neural operators."
     },
     {
-      role: "AI Research Engineer",
-      company: "Cognitive Systems Research",
-      period: "2022 - 2024",
-      description: "Researched multi-modal embedding spaces, authored internal evaluation benchmarks, and scaled vector similarity search across multi-billion token corpora."
-    },
-    {
-      role: "Machine Learning Intern",
-      company: "NeuralTech Solutions",
-      period: "2021 - 2022",
-      description: "Trained transformer-based classification models and automated data ingestion and quality scoring pipelines using PyTorch and Ray."
+      role: "Computational Engineering Practitioner",
+      company: "Aerodynamics & SciML Projects",
+      period: "2023 - 2024",
+      description: "Automated end-to-end OpenFOAM C-grid simulation pipelines, integrated LibTorch runtime bindings into C++ CFD solvers, and researched spectral bias control via NTK."
     }
   ],
 
-  // Registered blog posts
   posts: [
     {
-      slug: "optimizing-llm-inference",
-      title: "Optimizing LLM Inference: KV Cache Compression, PagedAttention, and vLLM",
-      date: "Nov 21, 2026",
-      readingTime: "6 min read",
-      tags: ["LLMs", "vLLM", "CUDA", "Inference"],
-      excerpt: "An in-depth breakdown of memory bottlenecks during LLM generation, how PagedAttention cures memory fragmentation, and key strategies for batch throughput.",
-      file: "assets/posts/optimizing-llm-inference.md"
+      slug: "pinn-navier-stokes-conservation",
+      title: "Physics-Informed Deep Learning: Embedding Navier-Stokes Invariance into Neural Loss",
+      date: "Nov 20, 2026",
+      readingTime: "7 min read",
+      tags: ["SciML", "PINNs", "Navier-Stokes", "PyTorch"],
+      excerpt: "Why unconstrained neural networks fail on fluid dynamics, and how formulating conservation of mass, momentum, and energy directly inside loss functions eliminates hallucinated physics.",
+      file: "assets/posts/pinn-navier-stokes-conservation.md"
     },
     {
-      slug: "distributed-training-pytorch",
-      title: "Mastering Distributed Model Training in PyTorch: FSDP vs DeepSpeed",
-      date: "Nov 14, 2026",
+      slug: "tbnn-openfoam-turbulence",
+      title: "Data-Driven Turbulence Closures: Coupling Tensor Basis Neural Networks with OpenFOAM",
+      date: "Nov 12, 2026",
       readingTime: "8 min read",
-      tags: ["PyTorch", "Distributed", "DeepSpeed", "FSDP"],
-      excerpt: "A practical guide to sharding model parameters, gradients, and optimizer states across multi-node GPU clusters without out-of-memory bottlenecks.",
-      file: "assets/posts/distributed-training-pytorch.md"
+      tags: ["OpenFOAM", "Turbulence", "LibTorch", "C++"],
+      excerpt: "Overcoming linear eddy-viscosity Boussinesq limits under strong adverse pressure gradients with Pope's tensor basis representation and C++ LibTorch solver loops.",
+      file: "assets/posts/tbnn-openfoam-turbulence.md"
     },
     {
-      slug: "building-production-rag",
-      title: "Architecting Production-Grade RAG: Hybrid Search and Re-Ranking",
-      date: "Nov 06, 2026",
-      readingTime: "5 min read",
-      tags: ["RAG", "Vector Search", "LLMs", "Architecture"],
-      excerpt: "Moving beyond naive vector retrieval: implementing reciprocal rank fusion (RRF), cross-encoder re-ranking, and chunking strategies that prevent hallucination.",
-      file: "assets/posts/building-production-rag.md"
+      slug: "fourier-neural-operators",
+      title: "Learning Infinite-Dimensional Operators: From CNNs to Fourier Neural Operators (FNO)",
+      date: "Nov 04, 2026",
+      readingTime: "6 min read",
+      tags: ["Neural Operators", "FNO", "SciML", "DeepONet"],
+      excerpt: "Mesh-independent parameterization of integral kernels directly in the Fourier domain to solve parametric PDEs at orders of magnitude faster than conventional CFD.",
+      file: "assets/posts/fourier-neural-operators.md"
     }
   ]
 };

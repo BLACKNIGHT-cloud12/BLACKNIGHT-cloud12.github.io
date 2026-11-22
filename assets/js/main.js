@@ -82,6 +82,11 @@
       aboutTextEl.textContent = config.profile.about.trim();
     }
 
+    const avatarEl = document.getElementById('profile-avatar-img');
+    if (avatarEl && config.profile.avatar) {
+      avatarEl.src = config.profile.avatar;
+    }
+
     // Social links
     if (config.profile.socials) {
       const gitLinks = document.querySelectorAll('.link-github');
