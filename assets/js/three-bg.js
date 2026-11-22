@@ -1,9 +1,10 @@
 /**
- * Three.js Interactive Digital Wave Grid & Hero Physics
+ * Three.js Interactive Digital Wave Grid, Aerodynamic Streamlines & Hero Physics
  * Built with techniques from Soumik Ghosh's Agent Skills:
  * - 3d-hero-interactions (pointer tracking, damped lerp, click impulses, drag-to-rotate, particle burst)
  * - scroll-driven-3d-story (scroll progress camera choreography)
  * - ai-website-aesthetics (dark-first tokens, fog, glowing nodes)
+ * - Option 1: Ambient 3D Flow Streamlines & Wind-Tunnel Tracers
  */
 
 (function () {
@@ -12,7 +13,7 @@
   const canvas = document.getElementById('three-bg-canvas');
   if (!canvas) return;
 
-  // Grid Configuration
+  // Grid & Streamline Configuration
   const CONFIG = {
     gridWidth: 1700,
     gridDepth: 1500,
@@ -23,7 +24,9 @@
     cameraPitch: -0.32,
     baseWaveSpeed: 0.0018,
     baseWaveHeight: 34,
-    particleBurstCount: 40
+    particleBurstCount: 40,
+    streamlineCount: window.innerWidth < 768 ? 3 : 5,
+    streamlineSegments: 75
   };
 
   let scene, camera, renderer;
@@ -41,16 +44,22 @@
   let dragRotation = { x: 0, y: 0, velX: 0, velY: 0 };
 
   // 2. Click Shockwave / Impulse System
-  const shockwaves = []; // { x, z, time, maxRadius, amplitude, speed }
+  const shockwaves = [];
 
-  // 3. Recycled Particle Burst Pool (Zero garbage collection during interaction)
+  // 3. Recycled Particle Burst Pool
   let burstPointsMesh, burstGeometry;
   const burstParticles = [];
   const burstPositions = new Float32Array(CONFIG.particleBurstCount * 3);
   const burstColors = new Float32Array(CONFIG.particleBurstCount * 3);
   let nextBurstIndex = 0;
 
-  // 4. Scroll-Driven Storyboard State
+  // 4. Ambient 3D Flow Streamlines (CFD Wind Tunnel Flow)
+  const streamlines = [];
+  let tracerPointsMesh, tracerGeometry;
+  const tracerPositions = new Float32Array(CONFIG.streamlineCount * 3);
+  const tracerColors = new Float32Array(CONFIG.streamlineCount * 3);
+
+  // 5. Scroll-Driven Storyboard State
   let scrollProgress = 0;
   let targetScrollProgress = 0;
 
@@ -61,6 +70,9 @@
       gridOpacity: 0.35,
       pointsColor: 0x00d4ff,     // Accent-2 cyan
       pointsOpacity: 0.85,
+      streamlineColor: 0x38bdf8, // Luminous sky-cyan
+      streamlineOpacity: 0.38,
+      tracerColor: 0x00d4ff,
       burstColor: 0x38bdf8,
       fogColor: 0x0a0a0e,        // --bg-0
       fogDensity: 0.00115
@@ -70,6 +82,9 @@
       gridOpacity: 0.22,
       pointsColor: 0x0284c7,
       pointsOpacity: 0.70,
+      streamlineColor: 0x0284c7,
+      streamlineOpacity: 0.28,
+      tracerColor: 0x0369a1,
       burstColor: 0x0284c7,
       fogColor: 0xf8fafc,
       fogDensity: 0.0011
@@ -86,7 +101,7 @@
     const theme = getCurrentTheme();
     scene.fog = new THREE.FogExp2(theme.fogColor, theme.fogDensity);
 
-    // 2. Camera Rig Group (for clean parallax + scroll layering)
+    // 2. Camera Setup
     camera = new THREE.PerspectiveCamera(55, window.innerWidth / window.innerHeight, 1, 3200);
     camera.position.set(0, CONFIG.cameraHeight, CONFIG.cameraDistance);
     camera.rotation.x = CONFIG.cameraPitch;
@@ -107,10 +122,13 @@
     // 5. Construct Particle Burst System
     createParticleBurstPool();
 
-    // 6. Event Listeners
+    // 6. Construct 3D Aerodynamic Flow Streamlines (Option 1)
+    createStreamlines();
+
+    // 7. Event Listeners
     setupInteractions();
 
-    // 7. Start Animation Loop
+    // 8. Start Animation Loop
     lastTime = performance.now();
     requestAnimationFrame(tick);
   }
@@ -175,7 +193,6 @@
   }
 
   function createParticleBurstPool() {
-    const theme = getCurrentTheme();
     burstGeometry = new THREE.BufferGeometry();
 
     for (let i = 0; i < CONFIG.particleBurstCount; i++) {
@@ -204,8 +221,102 @@
     scene.add(burstPointsMesh);
   }
 
+  // 3D Aerodynamic Flow Streamlines (Wind Tunnel Flow Field)
+  function createStreamlines() {
+    const theme = getCurrentTheme();
+    const count = CONFIG.streamlineCount;
+    const segs = CONFIG.streamlineSegments;
+
+    // Distribute streamlines at distinct altitudes and depths
+    const configs = [
+      { baseY: 85,  baseZ: -240, speed: 0.0016, phase: 0.0 },
+      { baseY: 135, baseZ: -120, speed: 0.0021, phase: 1.4 },
+      { baseY: 180, baseZ: -30,  speed: 0.0019, phase: 2.8 },
+      { baseY: 225, baseZ: 70,   speed: 0.0023, phase: 4.1 },
+      { baseY: 270, baseZ: 170,  speed: 0.0018, phase: 5.5 }
+    ];
+
+    const c1 = new THREE.Color(theme.streamlineColor);
+    const c2 = new THREE.Color(theme.pointsColor);
+
+    for (let s = 0; s < count; s++) {
+      const cfg = configs[s % configs.length];
+      const positions = new Float32Array((segs + 1) * 3);
+      const colors = new Float32Array((segs + 1) * 3);
+
+      for (let i = 0; i <= segs; i++) {
+        const u = i / segs;
+        const x = -850 + u * 1700;
+        const i3 = i * 3;
+
+        positions[i3] = x;
+        positions[i3 + 1] = cfg.baseY;
+        positions[i3 + 2] = cfg.baseZ;
+
+        // Alpha fade toward ends: high in center, zero at edges
+        const edgeDist = Math.abs(u - 0.5) * 2; // 0 at center, 1 at edge
+        const alpha = Math.max(0, 1 - Math.pow(edgeDist, 2.5));
+
+        const blended = c1.clone().lerp(c2, Math.sin(u * Math.PI));
+        colors[i3] = blended.r * alpha;
+        colors[i3 + 1] = blended.g * alpha;
+        colors[i3 + 2] = blended.b * alpha;
+      }
+
+      const geom = new THREE.BufferGeometry();
+      geom.setAttribute('position', new THREE.BufferAttribute(positions, 3).setUsage(THREE.DynamicDrawUsage));
+      geom.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+
+      const mat = new THREE.LineBasicMaterial({
+        vertexColors: true,
+        transparent: true,
+        opacity: theme.streamlineOpacity,
+        blending: THREE.AdditiveBlending,
+        depthWrite: false
+      });
+
+      const lineMesh = new THREE.Line(geom, mat);
+      scene.add(lineMesh);
+
+      streamlines.push({
+        mesh: lineMesh,
+        geometry: geom,
+        positions: positions,
+        baseY: cfg.baseY,
+        baseZ: cfg.baseZ,
+        speed: cfg.speed,
+        phase: cfg.phase,
+        tracerT: Math.random() // Normalized 0..1 tracer bead position
+      });
+    }
+
+    // Tracer Beads traveling along streamlines (smoke wire visualization)
+    tracerGeometry = new THREE.BufferGeometry();
+    for (let s = 0; s < count; s++) {
+      tracerPositions[s * 3 + 1] = -9999;
+      tracerColors[s * 3] = c2.r;
+      tracerColors[s * 3 + 1] = c2.g;
+      tracerColors[s * 3 + 2] = c2.b;
+    }
+    tracerGeometry.setAttribute('position', new THREE.BufferAttribute(tracerPositions, 3));
+    tracerGeometry.setAttribute('color', new THREE.BufferAttribute(tracerColors, 3));
+
+    const tracerMat = new THREE.PointsMaterial({
+      size: 6.5,
+      map: createGlowTexture(),
+      vertexColors: true,
+      transparent: true,
+      opacity: 0.95,
+      blending: THREE.AdditiveBlending,
+      depthWrite: false
+    });
+
+    tracerPointsMesh = new THREE.Points(tracerGeometry, tracerMat);
+    scene.add(tracerPointsMesh);
+  }
+
   function emitParticleBurst(worldX, worldZ) {
-    const burstCount = 12; // Emit batch per click
+    const burstCount = 12;
     const theme = getCurrentTheme();
     const c = new THREE.Color(theme.burstColor);
 
@@ -229,12 +340,10 @@
   }
 
   function setupInteractions() {
-    // 1. Pointer Tracking
     window.addEventListener('pointermove', (e) => {
       pointer.x = (e.clientX / window.innerWidth) * 2 - 1;
       pointer.y = -(e.clientY / window.innerHeight) * 2 + 1;
 
-      // Drag check
       if (isPointerDown) {
         const dx = e.clientX - dragStart.x;
         const dy = e.clientY - dragStart.y;
@@ -246,17 +355,14 @@
       }
     }, { passive: true });
 
-    // 2. Click Reaction / Impulse Trigger (Start on pointerdown <=16ms)
     window.addEventListener('pointerdown', (e) => {
       isPointerDown = true;
       isDragging = false;
       dragStart = { x: e.clientX, y: e.clientY };
 
-      // Calculate approximate 3D ground coordinates
       const worldX = pointer.x * (CONFIG.gridWidth * 0.45);
       const worldZ = -pointer.y * (CONFIG.gridDepth * 0.45);
 
-      // Trigger Shockwave ripple
       shockwaves.push({
         x: worldX,
         z: worldZ,
@@ -265,7 +371,6 @@
         speed: 16
       });
 
-      // Spawn particle burst
       emitParticleBurst(worldX, worldZ);
     });
 
@@ -273,13 +378,11 @@
       isPointerDown = false;
     });
 
-    // 3. Scroll-Driven Storytelling (Passive scroll observer)
     window.addEventListener('scroll', () => {
       const maxScroll = document.body.scrollHeight - window.innerHeight;
       targetScrollProgress = maxScroll > 0 ? window.scrollY / maxScroll : 0;
     }, { passive: true });
 
-    // 4. Resize & Theme Observer
     window.addEventListener('resize', onResize, { passive: true });
     document.addEventListener('visibilitychange', () => {
       isVisible = !document.hidden;
@@ -311,9 +414,14 @@
       pointsMesh.material.color.setHex(theme.pointsColor);
       pointsMesh.material.opacity = theme.pointsOpacity;
     }
+    streamlines.forEach(sl => {
+      if (sl.mesh && sl.mesh.material) {
+        sl.mesh.material.opacity = theme.streamlineOpacity;
+      }
+    });
   }
 
-  // Animation Loop (Damped Tick)
+  // Animation Loop
   function tick(timestamp) {
     requestAnimationFrame(tick);
     if (!isVisible || !geometry) return;
@@ -321,13 +429,13 @@
     const dt = Math.min((timestamp - lastTime) / 1000, 0.1);
     lastTime = timestamp;
 
-    // A. Frame-rate independent damped follower: smooth.lerp(pointer, 1 - Math.pow(0.001, dt))
+    // A. Frame-rate independent damped follower
     smooth.lerp(pointer, 1 - Math.pow(0.001, dt));
 
-    // B. Scroll Progress Interpolation (Story beats)
+    // B. Scroll Progress Interpolation
     scrollProgress += (targetScrollProgress - scrollProgress) * 0.08;
 
-    // C. Drag Inertia with Spring-back to Rest Pose (v += k*(rest - x); v *= damp)
+    // C. Drag Inertia with Spring-back
     if (!isDragging) {
       dragRotation.velX += 0.04 * (0 - dragRotation.x);
       dragRotation.velY += 0.04 * (0 - dragRotation.y);
@@ -337,10 +445,7 @@
     dragRotation.x += dragRotation.velX;
     dragRotation.y += dragRotation.velY;
 
-    // D. Camera Choreography (Scroll Storyboard + Parallax + Drag Tilt)
-    // Beat 1 (Hero: progress ~0): Overview
-    // Beat 2 (About/Projects: progress ~0.5): Camera descends closer, streamlined
-    // Beat 3 (Contact: progress ~1.0): Deep horizon view
+    // D. Camera Choreography
     const scrollHeightOffset = scrollProgress * 60;
     const scrollPitchOffset = scrollProgress * -0.06;
 
@@ -354,8 +459,6 @@
     const pos = geometry.attributes.position.array;
     const count = pos.length / 3;
     const t = timestamp * CONFIG.baseWaveSpeed;
-
-    // Dynamic wave parameters influenced by scroll progress
     const waveHeight = CONFIG.baseWaveHeight * (1.0 - scrollProgress * 0.25);
 
     for (let i = 0; i < count; i++) {
@@ -363,11 +466,9 @@
       const x = originalPositions[i3];
       const z = originalPositions[i3 + 2];
 
-      // Harmonic fluid streamlines
       const wave1 = Math.sin(x * 0.007 + t) * Math.cos(z * 0.007 + t * 0.8) * waveHeight;
       const wave2 = Math.sin((x + z) * 0.004 + t * 1.3) * 14;
 
-      // Cursor hover perturbation
       const curWorldX = smooth.x * (CONFIG.gridWidth * 0.45);
       const curWorldZ = -smooth.y * (CONFIG.gridDepth * 0.45);
       const dx = x - curWorldX;
@@ -379,7 +480,6 @@
         hoverRipple = Math.sin(dist * 0.05 - t * 3) * (factor * 30);
       }
 
-      // Propagate active shockwaves from user clicks
       let shockwaveHeight = 0;
       for (let s = 0; s < shockwaves.length; s++) {
         const sw = shockwaves[s];
@@ -395,10 +495,54 @@
 
       pos[i3 + 1] = wave1 + wave2 + hoverRipple + shockwaveHeight;
     }
-
     geometry.attributes.position.needsUpdate = true;
 
-    // F. Update Shockwaves (radius expand and fade)
+    // F. Update 3D Aerodynamic Flow Streamlines & Wind-Tunnel Tracers (Option 1)
+    const segs = CONFIG.streamlineSegments;
+    const tracerPosArr = tracerGeometry ? tracerGeometry.attributes.position.array : null;
+
+    for (let s = 0; s < streamlines.length; s++) {
+      const sl = streamlines[s];
+      const posArray = sl.positions;
+      const st = timestamp * sl.speed;
+
+      // Update tracer progress along the streamline
+      sl.tracerT = (sl.tracerT + dt * 0.18) % 1.0;
+      const tracerIndex = Math.min(segs, Math.floor(sl.tracerT * segs));
+
+      for (let i = 0; i <= segs; i++) {
+        const u = i / segs;
+        const x = -850 + u * 1700;
+        const i3 = i * 3;
+
+        // Harmonic Navier-Stokes streamline flow equation
+        const flowWarpY = Math.sin(x * 0.005 + st * 1.5 + sl.phase) * 20 + Math.cos(x * 0.002 + st) * 10;
+        const flowWarpZ = Math.cos(x * 0.004 + st * 1.2 + sl.phase) * 18;
+
+        // Interactive pointer deflection (deflecting over virtual obstacle)
+        const curX = smooth.x * 600;
+        const pdist = Math.abs(x - curX);
+        const deflection = Math.exp(-Math.pow(pdist / 180, 2)) * (smooth.y * 35);
+
+        posArray[i3] = x;
+        posArray[i3 + 1] = sl.baseY + flowWarpY + deflection;
+        posArray[i3 + 2] = sl.baseZ + flowWarpZ;
+
+        // If this is the tracer bead coordinate, save it
+        if (i === tracerIndex && tracerPosArr) {
+          tracerPosArr[s * 3] = x;
+          tracerPosArr[s * 3 + 1] = sl.baseY + flowWarpY + deflection;
+          tracerPosArr[s * 3 + 2] = sl.baseZ + flowWarpZ;
+        }
+      }
+      sl.geometry.attributes.position.needsUpdate = true;
+    }
+
+    if (tracerGeometry) {
+      tracerGeometry.attributes.position.needsUpdate = true;
+    }
+
+    // G. Update Shockwaves
     for (let s = shockwaves.length - 1; s >= 0; s--) {
       shockwaves[s].radius += shockwaves[s].speed;
       shockwaves[s].amplitude *= 0.95;
@@ -407,7 +551,7 @@
       }
     }
 
-    // G. Update Particle Bursts
+    // H. Update Particle Bursts
     const burstPosArr = burstGeometry.attributes.position.array;
     const burstColArr = burstGeometry.attributes.color.array;
     const theme = getCurrentTheme();
@@ -421,7 +565,7 @@
         pt.x += pt.vx;
         pt.y += pt.vy;
         pt.z += pt.vz;
-        pt.vy -= 0.12; // Gravity
+        pt.vy -= 0.12;
         pt.life -= dt / pt.maxLife;
 
         burstPosArr[p3] = pt.x;
@@ -433,7 +577,7 @@
         burstColArr[p3 + 1] = burstColor.g * alpha;
         burstColArr[p3 + 2] = burstColor.b * alpha;
       } else {
-        burstPosArr[p3 + 1] = -9999; // Hide off-screen
+        burstPosArr[p3 + 1] = -9999;
       }
     }
     burstGeometry.attributes.position.needsUpdate = true;
