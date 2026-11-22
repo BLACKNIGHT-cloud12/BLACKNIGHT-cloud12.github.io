@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en" class="dark scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blog & Technical Writing | Soumik</title>
+  <meta name="description" content="Technical articles and insights on 3D graphics, software architecture, web development, and cloud computing.">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#eef2ff',
+              100: '#e0e7ff',
+              200: '#c7d2fe',
+              300: '#a5b4fc',
+              400: '#818cf8',
+              500: '#6366f1',
+              600: '#4f46e5',
+              700: '#4338ca',
+              800: '#3730a3',
+              900: '#312e81',
+              950: '#1e1b4b',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Three.js CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body class="bg-[#090d16] text-slate-100 min-h-screen selection:bg-indigo-500 selection:text-white transition-colors duration-300">
+
+  <!-- Three.js Canvas Background -->
+  <canvas id="three-bg-canvas"></canvas>
+
+  <div class="relative z-10 flex flex-col min-h-screen">
+
+    <!-- Top Navigation -->
+    <header class="sticky top-0 z-50 glass-nav transition-all duration-300">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+        <a href="index.html" class="flex items-center gap-3 group">
+          <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-indigo-600 via-sky-500 to-indigo-400 flex items-center justify-center font-bold text-white shadow-lg shadow-indigo-500/30 group-hover:scale-105 transition-transform">
+            S
+          </div>
+          <span class="font-extrabold text-lg tracking-tight profile-name bg-gradient-to-r from-white via-slate-200 to-slate-400 bg-clip-text text-transparent">
+            Soumik
+          </span>
+        </a>
+
+        <nav class="hidden md:flex items-center gap-7 text-sm font-medium text-slate-300">
+          <a href="index.html" class="hover:text-indigo-400 transition-colors">Portfolio</a>
+          <a href="index.html#skills" class="hover:text-indigo-400 transition-colors">Skills</a>
+          <a href="index.html#projects" class="hover:text-indigo-400 transition-colors">Projects</a>
+          <a href="blog.html" class="text-indigo-400 font-semibold flex items-center gap-1.5">
+            Blog
+          </a>
+          <a href="index.html#contact" class="hover:text-indigo-400 transition-colors">Contact</a>
+        </nav>
+
+        <div class="flex items-center gap-3">
+          <button type="button" aria-label="Toggle Theme" class="theme-toggle-btn p-2 rounded-xl glass-panel text-slate-300 hover:text-white transition-colors">
+            <svg class="sun-icon w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+            <svg class="moon-icon w-5 h-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+          </button>
+          <button id="mobile-menu-btn" type="button" aria-label="Open Menu" class="md:hidden p-2 rounded-xl glass-panel text-slate-300">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+          </button>
+        </div>
+      </div>
+
+      <div id="mobile-menu" class="hidden md:hidden px-4 pt-2 pb-6 glass-panel border-t border-slate-800">
+        <div class="flex flex-col gap-3 text-sm font-medium pt-2">
+          <a href="index.html" class="px-3 py-2 rounded-lg hover:bg-slate-800">Portfolio</a>
+          <a href="index.html#projects" class="px-3 py-2 rounded-lg hover:bg-slate-800">Projects</a>
+          <a href="blog.html" class="px-3 py-2 rounded-lg hover:bg-slate-800 text-indigo-400 font-semibold">Blog</a>
+          <a href="index.html#contact" class="px-3 py-2 rounded-lg hover:bg-slate-800">Contact</a>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow max-w-4xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
+      
+      <!-- Header -->
+      <div class="mb-10 text-center sm:text-left">
+        <span class="text-xs font-mono font-bold uppercase tracking-wider text-indigo-400 mb-2 block">
+          // The Archive
+        </span>
+        <h1 class="text-3xl sm:text-5xl font-extrabold text-white tracking-tight mb-4">
+          Articles & Insights
+        </h1>
+        <p class="text-slate-400 text-base sm:text-lg max-w-2xl">
+          Deep-dives into 3D graphics on the web, modern JavaScript, architecture, and developer tooling.
+        </p>
+      </div>
+
+      <!-- Controls: Search & Tags -->
+      <div class="glass-panel rounded-2xl p-4 sm:p-6 mb-10 border border-slate-800 space-y-4">
+        <!-- Search Input -->
+        <div class="relative">
+          <svg class="w-5 h-5 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+          </svg>
+          <input 
+            type="text" 
+            id="blog-search" 
+            placeholder="Search articles by title, topic, or keyword..."
+            class="w-full pl-11 pr-4 py-3 bg-slate-900/90 light:bg-slate-100 rounded-xl text-sm border border-slate-700 light:border-slate-300 focus:outline-none focus:border-indigo-500 text-slate-100 light:text-slate-900 transition-colors placeholder:text-slate-500"
+          >
+        </div>
+
+        <!-- Tags filter list -->
+        <div id="blog-tags-filter" class="flex flex-wrap gap-2 pt-1">
+          <!-- Dynamically populated from blog.js -->
+        </div>
+      </div>
+
+      <!-- Blog Post List Container -->
+      <div id="blog-posts-list" class="space-y-6">
+        <!-- Dynamically populated from blog.js -->
+      </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="mt-20 border-t border-slate-800/80 glass-nav py-8">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-400">
+        <div>
+          <span>© 2026 <span class="profile-name">Soumik</span>. All rights reserved.</span>
+        </div>
+        <div class="flex items-center gap-6">
+          <a href="index.html" class="hover:text-white transition-colors">Portfolio Home</a>
+          <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="link-github hover:text-white transition-colors">GitHub</a>
+          <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" class="link-twitter hover:text-white transition-colors">Twitter / X</a>
+        </div>
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- Scripts -->
+  <script src="assets/js/config.js"></script>
+  <script src="assets/js/three-bg.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/blog.js"></script>
+</body>
+</html>

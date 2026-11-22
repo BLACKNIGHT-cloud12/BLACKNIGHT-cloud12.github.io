@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en" class="dark scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Article Reader | Soumik</title>
+  <meta name="description" content="Technical article on web development, 3D graphics, and systems architecture.">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#eef2ff',
+              100: '#e0e7ff',
+              200: '#c7d2fe',
+              300: '#a5b4fc',
+              400: '#818cf8',
+              500: '#6366f1',
+              600: '#4f46e5',
+              700: '#4338ca',
+              800: '#3730a3',
+              900: '#312e81',
+              950: '#1e1b4b',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Marked.js Markdown Parser -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+  <!-- Highlight.js Syntax Highlighter & Dark Theme CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark-dimmed.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body class="bg-[#090d16] text-slate-100 min-h-screen selection:bg-indigo-500 selection:text-white transition-colors duration-300">
+
+  <div class="relative z-10 flex flex-col min-h-screen">
+
+    <!-- Top Navigation -->
+    <header class="sticky top-0 z-50 glass-nav transition-all duration-300">
+      <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+        <a href="blog.html" class="flex items-center gap-2 text-sm font-semibold text-slate-300 hover:text-white group">
+          <svg class="w-4 h-4 transform group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+          <span>Back to Articles</span>
+        </a>
+
+        <div class="flex items-center gap-3">
+          <a href="index.html" class="text-xs font-mono font-medium text-slate-400 hover:text-white hidden sm:inline-block">Portfolio Home</a>
+          <button type="button" aria-label="Toggle Theme" class="theme-toggle-btn p-2 rounded-xl glass-panel text-slate-300 hover:text-white transition-colors">
+            <svg class="sun-icon w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+            <svg class="moon-icon w-5 h-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content Reader -->
+    <main class="flex-grow max-w-4xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-10 md:py-16">
+
+      <!-- Article Header -->
+      <div class="mb-10 pb-8 border-b border-slate-800 light:border-slate-200">
+        <!-- Tags -->
+        <div id="post-tags" class="flex flex-wrap gap-2 mb-4"></div>
+
+        <!-- Title -->
+        <h1 id="post-title" class="text-3xl sm:text-5xl font-extrabold text-white tracking-tight leading-tight mb-6">
+          Loading article...
+        </h1>
+
+        <!-- Meta: Date, Read Time, Author -->
+        <div class="flex items-center gap-4 text-xs sm:text-sm text-slate-400">
+          <div class="flex items-center gap-2">
+            <div class="w-8 h-8 rounded-full bg-gradient-to-tr from-indigo-600 to-sky-500 flex items-center justify-center font-bold text-white text-xs">
+              S
+            </div>
+            <span class="font-medium text-slate-200 profile-name">Soumik</span>
+          </div>
+          <span>•</span>
+          <span id="post-date" class="font-mono text-indigo-400"></span>
+          <span>•</span>
+          <span id="post-reading-time"></span>
+        </div>
+      </div>
+
+      <!-- Rendered Markdown Content -->
+      <article id="post-article-content" class="prose-content text-slate-300 light:text-slate-700">
+        <!-- Rendered by marked.js -->
+        <div class="flex items-center justify-center py-20 text-slate-500">
+          <svg class="animate-spin w-8 h-8 text-indigo-500 mr-3" fill="none" viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
+          </svg>
+          <span>Loading markdown content...</span>
+        </div>
+      </article>
+
+      <!-- Next / Prev Pagination Navigation -->
+      <nav id="post-pagination-nav"></nav>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="mt-20 border-t border-slate-800/80 glass-nav py-8">
+      <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-400">
+        <div>
+          <span>© 2026 <span class="profile-name">Soumik</span>. All rights reserved.</span>
+        </div>
+        <div class="flex items-center gap-6">
+          <a href="index.html" class="hover:text-white transition-colors">Portfolio Home</a>
+          <a href="blog.html" class="hover:text-white transition-colors">All Articles</a>
+          <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="link-github hover:text-white transition-colors">GitHub</a>
+        </div>
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- Scripts -->
+  <script src="assets/js/config.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/blog.js"></script>
+</body>
+</html>
