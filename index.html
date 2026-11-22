@@ -39,10 +39,14 @@
   <!-- Custom Stylesheet -->
   <link rel="stylesheet" href="assets/css/style.css">
 </head>
-<body class="bg-[#090d16] text-slate-100 min-h-screen selection:bg-indigo-500 selection:text-white transition-colors duration-300">
+<body class="bg-[#0a0a0e] text-slate-100 min-h-screen selection:bg-indigo-500 selection:text-white transition-colors duration-300">
 
-  <!-- Interactive Three.js 3D Background Canvas -->
+  <!-- Interactive Three.js 3D Background Canvas (with drag tilt, click shockwaves, particle bursts) -->
   <canvas id="three-bg-canvas"></canvas>
+
+  <!-- Background Stack Layer 1 & 2 (ai-website-aesthetics) -->
+  <div class="ambient-gradient-mesh"></div>
+  <div class="grain-overlay"></div>
 
   <!-- Relative Content Wrapper -->
   <div class="relative z-10 flex flex-col min-h-screen">
@@ -137,34 +141,42 @@
           Hi, I'm <span class="text-white font-semibold profile-name">Soumik Ghosh</span>. Building ML systems that respect physical conservation laws — specialized in Physics-Informed Neural Operators (PINO, FNO), turbulence closures (TBNN + OpenFOAM), and quantitative modeling.
         </p>
 
-        <!-- CTA Buttons -->
+        <!-- CTA Buttons with Magnetic effect -->
         <div class="flex flex-wrap items-center justify-center gap-4">
-          <a href="#projects" class="px-7 py-3.5 rounded-xl bg-gradient-to-r from-indigo-600 to-indigo-500 hover:from-indigo-500 hover:to-indigo-400 text-white font-semibold text-sm shadow-xl shadow-indigo-600/30 hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center gap-2">
-            <span>Explore Projects</span>
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-          </a>
-          <a href="blog.html" class="px-7 py-3.5 rounded-xl glass-panel hover:bg-slate-800/80 text-slate-200 font-semibold text-sm border border-slate-700/80 hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center gap-2">
-            <span>Read Articles</span>
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
-          </a>
+          <div class="magnetic-target">
+            <a href="#projects" class="px-7 py-3.5 rounded-xl bg-gradient-to-r from-indigo-600 to-indigo-500 hover:from-indigo-500 hover:to-indigo-400 text-white font-semibold text-sm shadow-xl shadow-indigo-600/30 hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center gap-2">
+              <span>Explore Projects</span>
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+            </a>
+          </div>
+          <div class="magnetic-target">
+            <a href="blog.html" class="px-7 py-3.5 rounded-xl glass-panel hover:bg-slate-800/80 text-slate-200 font-semibold text-sm border border-slate-700/80 hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center gap-2">
+              <span>Read Articles</span>
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+            </a>
+          </div>
         </div>
 
-        <!-- Social Connect Row -->
+        <!-- Social Connect Row with Magnetic effect -->
         <div class="flex flex-wrap items-center justify-center gap-3 mt-8 text-xs font-mono">
-          <a href="https://github.com/BLACKNIGHT-cloud12" target="_blank" rel="noopener noreferrer" class="link-github px-4 py-2 rounded-xl glass-panel hover:bg-slate-800/90 text-slate-300 hover:text-white border border-slate-700/60 hover:border-sky-400/50 transition-all flex items-center gap-2">
-            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
-            <span>github.com/BLACKNIGHT-cloud12</span>
-          </a>
-          <a href="https://www.linkedin.com/in/soumik-ghosh-434164377" target="_blank" rel="noopener noreferrer" class="link-linkedin px-4 py-2 rounded-xl glass-panel hover:bg-slate-800/90 text-slate-300 hover:text-white border border-slate-700/60 hover:border-[#0A66C2]/60 transition-all flex items-center gap-2">
-            <svg class="w-4 h-4 text-[#0A66C2]" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
-            <span>linkedin.com/in/soumik-ghosh</span>
-          </a>
+          <div class="magnetic-target">
+            <a href="https://github.com/BLACKNIGHT-cloud12" target="_blank" rel="noopener noreferrer" class="link-github px-4 py-2 rounded-xl glass-panel hover:bg-slate-800/90 text-slate-300 hover:text-white border border-slate-700/60 hover:border-sky-400/50 transition-all flex items-center gap-2">
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+              <span>github.com/BLACKNIGHT-cloud12</span>
+            </a>
+          </div>
+          <div class="magnetic-target">
+            <a href="https://www.linkedin.com/in/soumik-ghosh-434164377" target="_blank" rel="noopener noreferrer" class="link-linkedin px-4 py-2 rounded-xl glass-panel hover:bg-slate-800/90 text-slate-300 hover:text-white border border-slate-700/60 hover:border-[#0A66C2]/60 transition-all flex items-center gap-2">
+              <svg class="w-4 h-4 text-[#0A66C2]" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+              <span>linkedin.com/in/soumik-ghosh</span>
+            </a>
+          </div>
         </div>
       </section>
 
       <!-- About Me Section -->
       <section id="about" class="scroll-mt-24">
-        <div class="glass-panel rounded-3xl p-8 sm:p-12 border border-slate-800/80">
+        <div class="glass-panel spotlight-card rounded-3xl p-8 sm:p-12 border border-slate-800/80">
           <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
             <div class="lg:col-span-8">
               <span class="text-xs font-mono font-bold uppercase tracking-wider text-indigo-400 mb-2 block">
@@ -222,7 +234,7 @@
         </div>
 
         <!-- Live GitHub Analytics -->
-        <div class="mt-12 glass-panel rounded-3xl p-6 sm:p-8 border border-slate-800">
+        <div class="mt-12 glass-panel spotlight-card rounded-3xl p-6 sm:p-8 border border-slate-800">
           <div class="flex items-center gap-3 mb-6">
             <svg class="w-6 h-6 text-sky-400" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
             <div>
@@ -289,7 +301,7 @@
 
       <!-- Contact Section -->
       <section id="contact" class="scroll-mt-24">
-        <div class="glass-panel rounded-3xl p-8 sm:p-14 text-center border border-slate-800 relative overflow-hidden">
+        <div class="glass-panel spotlight-card rounded-3xl p-8 sm:p-14 text-center border border-slate-800 relative overflow-hidden">
           <div class="absolute -top-24 left-1/2 -translate-x-1/2 w-96 h-96 bg-indigo-600/10 rounded-full blur-3xl pointer-events-none"></div>
 
           <span class="text-xs font-mono font-bold uppercase tracking-wider text-indigo-400 mb-3 block">
@@ -299,26 +311,34 @@
             Have a project in mind or want to collaborate?
           </h2>
           <p class="text-slate-400 max-w-xl mx-auto mb-8 text-base leading-relaxed">
-            I'm always open to discussing new engineering opportunities, creative projects, or technical writing partnerships.
+            I'm always open to discussing new engineering opportunities, research collaborations, or technical partnerships.
           </p>
 
           <div class="flex flex-wrap items-center justify-center gap-4">
-            <a href="https://www.linkedin.com/in/soumik-ghosh-434164377" target="_blank" rel="noopener noreferrer" class="link-linkedin px-6 py-3.5 rounded-xl bg-[#0A66C2] hover:bg-[#084e96] text-white font-semibold text-sm shadow-xl shadow-[#0A66C2]/25 hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center gap-2.5">
-              <svg class="w-4 h-4 fill-white" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
-              <span>Connect on LinkedIn</span>
-            </a>
-            <a href="https://github.com/BLACKNIGHT-cloud12" target="_blank" rel="noopener noreferrer" class="link-github px-6 py-3.5 rounded-xl glass-panel hover:bg-slate-800 text-white font-semibold text-sm border border-slate-700 hover:border-sky-400/50 hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center gap-2.5">
-              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
-              <span>GitHub @BLACKNIGHT-cloud12</span>
-            </a>
-            <button id="copy-email-btn" type="button" class="px-6 py-3.5 rounded-xl glass-panel hover:bg-slate-800 text-slate-200 font-semibold text-sm border border-slate-700/80 hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center gap-2">
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path></svg>
-              <span>Copy Email</span>
-            </button>
-            <a href="mailto:soumikghosh30.03.07@gmail.com" class="link-email px-6 py-3.5 rounded-xl glass-panel hover:bg-slate-800 text-slate-200 font-semibold text-sm border border-slate-700/80 hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center gap-2">
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
-              <span>Send Direct Email</span>
-            </a>
+            <div class="magnetic-target">
+              <a href="https://www.linkedin.com/in/soumik-ghosh-434164377" target="_blank" rel="noopener noreferrer" class="link-linkedin px-6 py-3.5 rounded-xl bg-[#0A66C2] hover:bg-[#084e96] text-white font-semibold text-sm shadow-xl shadow-[#0A66C2]/25 hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center gap-2.5">
+                <svg class="w-4 h-4 fill-white" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                <span>Connect on LinkedIn</span>
+              </a>
+            </div>
+            <div class="magnetic-target">
+              <a href="https://github.com/BLACKNIGHT-cloud12" target="_blank" rel="noopener noreferrer" class="link-github px-6 py-3.5 rounded-xl glass-panel hover:bg-slate-800 text-white font-semibold text-sm border border-slate-700 hover:border-sky-400/50 hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center gap-2.5">
+                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+                <span>GitHub @BLACKNIGHT-cloud12</span>
+              </a>
+            </div>
+            <div class="magnetic-target">
+              <button id="copy-email-btn" type="button" class="px-6 py-3.5 rounded-xl glass-panel hover:bg-slate-800 text-slate-200 font-semibold text-sm border border-slate-700/80 hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center gap-2">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path></svg>
+                <span>Copy Email</span>
+              </button>
+            </div>
+            <div class="magnetic-target">
+              <a href="mailto:soumikghosh30.03.07@gmail.com" class="link-email px-6 py-3.5 rounded-xl glass-panel hover:bg-slate-800 text-slate-200 font-semibold text-sm border border-slate-700/80 hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center gap-2">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                <span>Send Direct Email</span>
+              </a>
+            </div>
           </div>
         </div>
       </section>
